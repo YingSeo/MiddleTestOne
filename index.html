@@ -1,0 +1,2896 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HỆ THỐNG ÔN TẬP GIỮA KÌ 1 - K10 | SOLO LEVELING SYSTEM</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Orbitron, Rajdhani, Chakra Petch (Full Vietnamese Support) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --sl-cyan: #00f0ff;
+      --sl-blue: #2979ff;
+      --sl-indigo: #1545ff;
+      --sl-violet: #a855f7;
+      --sl-bg-deep: #02050e;
+      --sl-glass-dark: rgba(3, 10, 28, 0.86);
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #01030a;
+      color: #eaf6ff;
+      font-family: 'Chakra Petch', 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .font-sl-title {
+      font-family: 'Orbitron', 'Rajdhani', sans-serif;
+      letter-spacing: 0.14em;
+    }
+
+    .font-sl-ui {
+      font-family: 'Rajdhani', 'Chakra Petch', sans-serif;
+    }
+
+    /* STRICT VIEW ISOLATION UTILITY */
+    .stage-hidden {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    /* =====================================================================
+       1. REALISTIC SOLO LEVELING ANIME NOTIFICATION WINDOW & GPU-OPTIMIZED FX
+       ===================================================================== */
+    .sl-notif-box {
+      position: relative;
+      width: min(600px, 92vw);
+      min-height: 340px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.28) 0%, rgba(41, 121, 255, 0.14) 45%, transparent 72%),
+        linear-gradient(180deg, rgba(6, 20, 56, 0.97) 0%, rgba(2, 8, 26, 0.99) 55%, rgba(4, 15, 42, 0.98) 100%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 240, 255, 0.04) 0px,
+          rgba(0, 240, 255, 0.04) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      border: 2px solid #38b6ff;
+      box-shadow:
+        0 0 28px rgba(0, 240, 255, 0.75),
+        inset 0 0 32px rgba(0, 240, 255, 0.28);
+      padding: 26px 30px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      will-change: transform, opacity;
+      contain: layout style;
+    }
+
+    /* Outer Architectural Frame Rail */
+    .sl-notif-box::before {
+      content: '';
+      position: absolute;
+      inset: -11px;
+      border: 1.5px solid rgba(125, 211, 252, 0.88);
+      clip-path: polygon(
+        0 18px, 18px 0, calc(100% - 18px) 0, 100% 18px,
+        100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px)
+      );
+      pointer-events: none;
+    }
+
+    /* Inner Precision Filigree Hairline */
+    .sl-notif-box::after {
+      content: '';
+      position: absolute;
+      inset: 7px;
+      border: 1px solid rgba(186, 230, 253, 0.5);
+      pointer-events: none;
+    }
+
+    /* GPU-Accelerated Hologram Laser Scanline (No layout thrashing) */
+    @keyframes holoLaserSweepGPU {
+      0% { transform: translate3d(0, 0, 0); opacity: 0; }
+      12% { opacity: 0.85; }
+      88% { opacity: 0.85; }
+      100% { transform: translate3d(0, 415px, 0); opacity: 0; }
+    }
+
+    .sl-laser-scan {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #00f0ff 20%, #ffffff 50%, #00f0ff 80%, transparent 100%);
+      box-shadow: 0 0 12px #00f0ff;
+      pointer-events: none;
+      z-index: 3;
+      will-change: transform, opacity;
+      animation: holoLaserSweepGPU 3.4s linear infinite;
+    }
+
+    .sl-corner-dec {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      pointer-events: none;
+      z-index: 6;
+    }
+    .sl-c-tl { top: -4px; left: -4px; border-top: 3px solid #ffffff; border-left: 3px solid #ffffff; box-shadow: -2px -2px 10px rgba(0, 240, 255, 0.8); }
+    .sl-c-tr { top: -4px; right: -4px; border-top: 3px solid #ffffff; border-right: 3px solid #ffffff; box-shadow: 2px -2px 10px rgba(0, 240, 255, 0.8); }
+    .sl-c-bl { bottom: -4px; left: -4px; border-bottom: 3px solid #ffffff; border-left: 3px solid #ffffff; box-shadow: -2px 2px 10px rgba(0, 240, 255, 0.8); }
+    .sl-c-br { bottom: -4px; right: -4px; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; box-shadow: 2px 2px 10px rgba(0, 240, 255, 0.8); }
+
+    /* Top & Bottom Anamorphic Blue Flares */
+    .sl-flare-top,
+    .sl-flare-bottom {
+      position: absolute;
+      left: 3%;
+      width: 94%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent 0%, #2979ff 15%, #00f0ff 35%, #ffffff 50%, #00f0ff 65%, #2979ff 85%, transparent 100%);
+      box-shadow: 0 0 16px 3px #00f0ff;
+      pointer-events: none;
+      z-index: 6;
+    }
+    .sl-flare-top { top: -11px; }
+    .sl-flare-bottom { bottom: -11px; }
+
+    /* Header Row: [!] icon box + [NOTIFICATION] title box */
+    .sl-notif-header {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      height: 50px;
+    }
+
+    .sl-notif-icon-box {
+      width: 54px;
+      border: 1.5px solid rgba(147, 213, 255, 0.95);
+      background: linear-gradient(180deg, rgba(16, 46, 114, 0.92) 0%, rgba(5, 16, 45, 0.98) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 16px rgba(0, 240, 255, 0.6), 0 0 14px rgba(41, 121, 255, 0.5);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .sl-notif-icon-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 9999px;
+      border: 2px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 15px;
+      color: #ffffff;
+      text-shadow: 0 0 10px #00f0ff;
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.95), inset 0 0 8px rgba(0, 240, 255, 0.65);
+    }
+
+    .sl-notif-title-box {
+      position: relative;
+      flex: 1;
+      border: 1.5px solid rgba(147, 213, 255, 0.95);
+      background: linear-gradient(180deg, rgba(124, 58, 237, 0.36) 0%, rgba(12, 34, 86, 0.94) 55%, rgba(6, 18, 52, 0.98) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 24px rgba(139, 92, 246, 0.48), 0 0 18px rgba(43, 130, 255, 0.55);
+      overflow: hidden;
+      padding: 0 10px;
+    }
+
+    .sl-notif-title-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 12%;
+      width: 76%;
+      height: 2.5px;
+      background: linear-gradient(90deg, transparent, #f3e8ff, #00f0ff, transparent);
+      box-shadow: 0 0 18px #c084fc;
+    }
+
+    .sl-notif-title-text {
+      font-family: 'Orbitron', 'Rajdhani', sans-serif;
+      font-size: clamp(15px, 2.4vw, 21px);
+      font-weight: 900;
+      letter-spacing: 0.22em;
+      color: #ffffff;
+      white-space: nowrap;
+      text-shadow: 0 0 12px rgba(0, 240, 255, 1), 0 0 26px rgba(168, 85, 247, 0.85);
+    }
+
+    .sl-notif-body {
+      position: relative;
+      z-index: 4;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 14px 12px;
+      border-left: 1px solid rgba(0, 240, 255, 0.25);
+      border-right: 1px solid rgba(0, 240, 255, 0.25);
+      margin: 10px 0;
+      background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
+    }
+
+    .sl-notif-prompt {
+      font-family: 'Rajdhani', 'Chakra Petch', sans-serif;
+      font-size: clamp(22px, 3vw, 29px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      text-shadow: 0 0 16px rgba(0, 240, 255, 0.95), 0 0 32px rgba(41, 121, 255, 0.7);
+    }
+
+    .sl-notif-submeta {
+      font-family: 'Orbitron', monospace;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      color: rgba(147, 213, 255, 0.8);
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+
+    .sl-notif-actions {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      padding-bottom: 2px;
+    }
+
+    .sl-notif-btn {
+      position: relative;
+      min-width: 132px;
+      height: 46px;
+      padding: 0 30px;
+      background: linear-gradient(180deg, rgba(20, 62, 148, 0.92) 0%, rgba(6, 18, 52, 0.98) 100%);
+      border: 1.5px solid #7dd3fc;
+      color: #ffffff;
+      font-family: 'Orbitron', 'Rajdhani', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.6), inset 0 0 16px rgba(56, 182, 255, 0.45);
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .sl-notif-btn::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 1px solid rgba(186, 230, 253, 0.35);
+      pointer-events: none;
+    }
+
+    .sl-notif-btn:hover {
+      background: linear-gradient(180deg, rgba(0, 210, 255, 0.85) 0%, rgba(21, 90, 230, 0.96) 100%);
+      border-color: #ffffff;
+      box-shadow: 0 0 34px rgba(0, 240, 255, 1), 0 0 60px rgba(41, 121, 255, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.7);
+      transform: translateY(-2px) scale(1.06);
+      text-shadow: 0 0 10px #ffffff;
+    }
+
+    .sl-notif-btn-no:hover {
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.88) 0%, rgba(127, 29, 29, 0.98) 100%);
+      border-color: #fecaca;
+      box-shadow: 0 0 34px rgba(239, 68, 68, 1), 0 0 65px rgba(220, 38, 38, 0.85), inset 0 0 18px rgba(254, 202, 202, 0.65);
+    }
+
+    @keyframes slWindowMaterialize {
+      0% {
+        opacity: 0;
+        transform: scale3d(0.05, 0.01, 1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale3d(1.06, 0.04, 1);
+      }
+      82% {
+        transform: scale3d(1.01, 1.03, 1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale3d(1, 1, 1);
+      }
+    }
+
+    .animate-sl-materialize {
+      animation: slWindowMaterialize 0.52s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes slFloodPop {
+      0% {
+        opacity: 0;
+        transform: scale3d(1.2, 0.08, 1);
+      }
+      100% {
+        opacity: 0.96;
+        transform: scale3d(1, 1, 1);
+      }
+    }
+
+    .sl-flood-window {
+      position: absolute;
+      pointer-events: none;
+      will-change: transform, opacity;
+      animation: slFloodPop 0.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Intense Chromatic Aberration & Screen Shake during Glitch (GPU Transform Only) */
+    @keyframes slCorruptJitter {
+      0%, 100% { transform: translate3d(0, 0, 0) skewX(0deg); }
+      25% { transform: translate3d(-5px, 2px, 0) skewX(-2deg); }
+      50% { transform: translate3d(6px, -2px, 0) skewX(3deg); }
+      75% { transform: translate3d(-4px, -2px, 0) skewX(1.5deg); }
+    }
+
+    .corrupt-jitter {
+      will-change: transform;
+      animation: slCorruptJitter 0.12s infinite;
+    }
+
+    @keyframes screenEarthquake {
+      0%, 100% { transform: translate3d(0, 0, 0); }
+      25% { transform: translate3d(-8px, 5px, 0); }
+      50% { transform: translate3d(9px, -5px, 0); }
+      75% { transform: translate3d(-6px, -4px, 0); }
+    }
+
+    .screen-shake-active {
+      will-change: transform;
+      animation: screenEarthquake 0.14s infinite;
+    }
+
+    .glitch-block-artifact {
+      position: absolute;
+      pointer-events: none;
+      z-index: 25;
+      mix-blend-mode: screen;
+    }
+
+    .glitch-slice-bar {
+      position: fixed;
+      left: 0;
+      width: 100vw;
+      pointer-events: none;
+      z-index: 50;
+      mix-blend-mode: screen;
+    }
+
+    /* =====================================================================
+       2. MASTERPIECE SHADOW MONARCH & DIMENSIONAL GATE WALLPAPER STAGE
+       ===================================================================== */
+    .bg-stage {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 0;
+      background: #020510;
+      contain: strict;
+    }
+
+    /* High-Detail Vector & Cinematic Wallpaper Layer */
+    #sl-masterpiece-wallpaper {
+      position: absolute;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 24%, rgba(139, 92, 246, 0.34) 0%, rgba(0, 240, 255, 0.18) 28%, transparent 62%),
+        radial-gradient(circle at 50% 85%, rgba(21, 90, 255, 0.28) 0%, transparent 60%),
+        linear-gradient(180deg, #020512 0%, #06102c 48%, #030718 100%);
+    }
+
+    #sl-anime-bg-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* YouTube Container stays strictly hidden unless PLAYING is verified */
+    #yt-frame-shell {
+      position: absolute;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 3;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.8s ease;
+    }
+
+    #yt-frame-shell.yt-verified-playing {
+      opacity: 0.42;
+      visibility: visible;
+      mix-blend-mode: screen;
+    }
+
+    #yt-frame-shell iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 56.25vw;
+      min-height: 100vh;
+      min-width: 177.77vh;
+      transform: translate3d(-50%, -50%, 0) scale(1.04);
+      border: 0;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .bg-atmosphere-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 50%, transparent 32%, rgba(1, 4, 14, 0.76) 100%),
+        linear-gradient(180deg, rgba(1, 4, 14, 0.65) 0%, transparent 22%, transparent 78%, rgba(1, 4, 14, 0.84) 100%),
+        repeating-linear-gradient(0deg, rgba(0, 240, 255, 0.016) 0px, rgba(0, 240, 255, 0.016) 1px, transparent 1px, transparent 4px);
+    }
+
+    /* =====================================================================
+       3. GOD-TIER SOLO LEVELING HOLOGRAM HUD & S-RANK GATE CARDS (ZERO-LAG)
+       ===================================================================== */
+    .sl-hologram-frame {
+      position: relative;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.22) 0%, transparent 72%),
+        linear-gradient(180deg, rgba(6, 20, 52, 0.95) 0%, rgba(2, 8, 24, 0.98) 100%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 240, 255, 0.028) 0px,
+          rgba(0, 240, 255, 0.028) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+      border: 1.5px solid #38b6ff;
+      box-shadow:
+        0 0 24px rgba(0, 240, 255, 0.4),
+        0 12px 32px rgba(0, 0, 0, 0.88),
+        inset 0 0 28px rgba(0, 240, 255, 0.2);
+      contain: layout style;
+    }
+
+    .sl-hologram-frame::before {
+      content: '';
+      position: absolute;
+      inset: -7px;
+      border: 1.2px solid rgba(0, 240, 255, 0.68);
+      clip-path: polygon(
+        0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px,
+        100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px)
+      );
+      pointer-events: none;
+    }
+
+    .sl-hologram-frame::after {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 1px solid rgba(147, 213, 255, 0.32);
+      pointer-events: none;
+    }
+
+    /* S-Rank Dungeon Gate Card (GPU Composited, No Backdrop-Filter Lag) */
+    .sl-gate-card {
+      position: relative;
+      background:
+        radial-gradient(circle at 50% 34%, var(--gate-glow-soft, rgba(0, 240, 255, 0.26)) 0%, transparent 66%),
+        linear-gradient(180deg, rgba(7, 22, 56, 0.96) 0%, rgba(2, 7, 22, 0.99) 65%, rgba(5, 16, 42, 0.97) 100%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 240, 255, 0.028) 0px,
+          rgba(0, 240, 255, 0.028) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+      border: 2px solid var(--gate-border, #38b6ff);
+      box-shadow:
+        0 0 26px var(--gate-shadow, rgba(43, 130, 255, 0.55)),
+        0 18px 42px rgba(0, 0, 0, 0.9),
+        inset 0 0 32px var(--gate-inset, rgba(0, 240, 255, 0.22));
+      transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.24s ease, box-shadow 0.24s ease;
+      will-change: transform;
+      contain: layout style;
+    }
+
+    .sl-gate-card::before {
+      content: '';
+      position: absolute;
+      inset: -9px;
+      border: 1.5px solid var(--gate-outer, rgba(0, 240, 255, 0.78));
+      clip-path: polygon(
+        0 16px, 16px 0, calc(100% - 16px) 0, 100% 16px,
+        100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0 calc(100% - 16px)
+      );
+      pointer-events: none;
+      transition: transform 0.24s ease, border-color 0.24s ease;
+    }
+
+    .sl-gate-card::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid rgba(186, 230, 253, 0.36);
+      pointer-events: none;
+    }
+
+    .sl-gate-card:hover {
+      transform: translate3d(0, -10px, 0) scale(1.022);
+      border-color: #ffffff;
+      box-shadow:
+        0 0 42px var(--gate-hover-glow, rgba(0, 240, 255, 0.95)),
+        0 24px 55px rgba(0, 0, 0, 0.95),
+        inset 0 0 40px var(--gate-inset, rgba(0, 240, 255, 0.38));
+    }
+
+    .sl-gate-card:hover::before {
+      border-color: #ffffff;
+    }
+
+    /* Live Audio Spectrum Bars in Header */
+    @keyframes eqBounce1 {
+      0%, 100% { transform: scaleY(0.25); }
+      50% { transform: scaleY(1); }
+    }
+    @keyframes eqBounce2 {
+      0%, 100% { transform: scaleY(0.95); }
+      45% { transform: scaleY(0.2); }
+    }
+    @keyframes eqBounce3 {
+      0%, 100% { transform: scaleY(0.4); }
+      65% { transform: scaleY(0.95); }
+    }
+
+    .eq-bar {
+      width: 3px;
+      height: 14px;
+      background: #00f0ff;
+      transform-origin: bottom;
+      will-change: transform;
+    }
+    .eq-active .eq-bar:nth-child(1) { animation: eqBounce1 0.42s ease-in-out infinite; }
+    .eq-active .eq-bar:nth-child(2) { animation: eqBounce2 0.36s ease-in-out infinite; }
+    .eq-active .eq-bar:nth-child(3) { animation: eqBounce3 0.48s ease-in-out infinite; }
+    .eq-active .eq-bar:nth-child(4) { animation: eqBounce1 0.31s ease-in-out infinite; }
+
+    /* Gate Card Color Variants */
+    .gate-theme-cyan {
+      --gate-border: #00d2ff;
+      --gate-outer: rgba(0, 240, 255, 0.82);
+      --gate-shadow: rgba(0, 210, 255, 0.62);
+      --gate-inset: rgba(0, 240, 255, 0.26);
+      --gate-glow-soft: rgba(0, 240, 255, 0.25);
+      --gate-hover-glow: #00f0ff;
+    }
+
+    .gate-theme-emerald {
+      --gate-border: #10b981;
+      --gate-outer: rgba(52, 211, 153, 0.82);
+      --gate-shadow: rgba(16, 185, 129, 0.62);
+      --gate-inset: rgba(16, 185, 129, 0.25);
+      --gate-glow-soft: rgba(16, 185, 129, 0.25);
+      --gate-hover-glow: #34d399;
+    }
+
+    .gate-theme-royal {
+      --gate-border: #a855f7;
+      --gate-outer: rgba(192, 132, 252, 0.85);
+      --gate-shadow: rgba(168, 85, 247, 0.65);
+      --gate-inset: rgba(168, 85, 247, 0.26);
+      --gate-glow-soft: rgba(168, 85, 247, 0.26);
+      --gate-hover-glow: #c084fc;
+    }
+
+    /* Authentic Solo Leveling Action Button inside Gate Card */
+    .sl-gate-action-btn {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      background: linear-gradient(180deg, rgba(16, 56, 138, 0.95) 0%, rgba(5, 16, 46, 0.99) 100%);
+      border: 1.5px solid #7dd3fc;
+      color: #ffffff;
+      font-family: 'Orbitron', 'Rajdhani', sans-serif;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow:
+        0 0 22px rgba(0, 240, 255, 0.55),
+        inset 0 0 18px rgba(0, 240, 255, 0.35);
+      transition: all 0.22s ease;
+      overflow: hidden;
+      z-index: 5;
+    }
+
+    .sl-gate-action-btn::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 1px solid rgba(186, 230, 253, 0.42);
+      pointer-events: none;
+    }
+
+    .sl-gate-action-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 75%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+      transform: skewX(-25deg);
+      transition: left 0.55s ease;
+      pointer-events: none;
+    }
+
+    .sl-gate-card:hover .sl-gate-action-btn::after {
+      left: 140%;
+    }
+
+    .sl-gate-action-btn:hover {
+      background: linear-gradient(180deg, rgba(0, 210, 255, 0.9) 0%, rgba(16, 64, 178, 0.98) 100%);
+      border-color: #ffffff;
+      box-shadow:
+        0 0 34px #00f0ff,
+        0 0 65px #2979ff,
+        inset 0 0 22px rgba(255, 255, 255, 0.65);
+      text-shadow: 0 0 12px #ffffff;
+    }
+
+    .sys-text-glow {
+      color: #ffffff;
+      text-shadow: 0 0 12px #00f0ff, 0 0 28px #2979ff;
+    }
+
+    /* Rotating Dimensional Portal Rings */
+    @keyframes spinClockwise {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes spinCounterClockwise {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+    @keyframes portalPulse {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.09); opacity: 1; }
+    }
+
+    .ring-cw {
+      transform-origin: 50% 50%;
+      animation: spinClockwise 16s linear infinite;
+    }
+    .ring-ccw {
+      transform-origin: 50% 50%;
+      animation: spinCounterClockwise 10s linear infinite;
+    }
+    .ring-fast-cw {
+      transform-origin: 50% 50%;
+      animation: spinClockwise 6s linear infinite;
+    }
+    .portal-core-pulse {
+      transform-origin: 50% 50%;
+      animation: portalPulse 2.6s ease-in-out infinite;
+    }
+
+    /* =====================================================================
+       4. SLEEK HOLOGRAPHIC ARROW-ONLY RETURN BUTTON (INSIDE GATE)
+       ===================================================================== */
+    .sl-arrow-return-btn {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 10005;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, rgba(6, 20, 56, 0.92) 0%, rgba(2, 8, 26, 0.96) 100%);
+      border: 1.5px solid #00f0ff;
+      box-shadow:
+        0 0 18px rgba(0, 240, 255, 0.8),
+        inset 0 0 12px rgba(0, 240, 255, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0.85;
+    }
+
+    .sl-arrow-return-btn:hover {
+      opacity: 1;
+      transform: scale(1.1) translateX(-2px);
+      border-color: #ffffff;
+      background: linear-gradient(135deg, rgba(0, 210, 255, 0.88) 0%, rgba(21, 90, 230, 0.96) 100%);
+      box-shadow:
+        0 0 28px #00f0ff,
+        0 0 55px #2979ff,
+        inset 0 0 16px rgba(255, 255, 255, 0.75);
+    }
+
+    /* =====================================================================
+       5. PERMANENT "SYSTEM HAS DELETED" TERMINAL SCREEN (WHEN "NO" CLICKED)
+       ===================================================================== */
+    @keyframes redDeletePulse {
+      0%, 100% {
+        text-shadow: 0 0 18px #ff0000, 0 0 38px #dc2626, 0 0 75px #7f1d1d;
+        opacity: 1;
+      }
+      50% {
+        text-shadow: 0 0 8px #ef4444, 0 0 20px #991b1b;
+        opacity: 0.84;
+      }
+    }
+
+    .deleted-text-glow {
+      color: #ff1e1e;
+      font-family: 'Orbitron', 'Rajdhani', sans-serif;
+      letter-spacing: 0.22em;
+      animation: redDeletePulse 1.8s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen bg-[#01030a]">
+
+  <!-- ===================================================================
+       PERMANENT TERMINAL LOCKOUT SCREEN (SHOWN WHEN USER CLICKS "NO")
+       =================================================================== -->
+  <div id="system-deleted-stage" class="stage-hidden fixed inset-0 z-[99999] bg-black flex flex-col items-center justify-center select-none pointer-events-auto">
+    <div class="deleted-text-glow text-2xl sm:text-5xl md:text-6xl font-black text-center px-6 uppercase">
+      SYSTEM HAS DELETED
+    </div>
+  </div>
+
+  <!-- ===================================================================
+       STAGE 1: REALISTIC SOLO LEVELING NOTIFICATION & INTENSE GLITCH INTRO
+       =================================================================== -->
+  <div id="intro-stage" class="fixed inset-0 z-[9000] bg-black flex items-center justify-center overflow-hidden">
+
+    <!-- Fullscreen Digital Glitch & Lightning Canvas behind Intro -->
+    <canvas id="intro-glitch-canvas" class="fixed inset-0 w-screen h-screen pointer-events-none z-[5]"></canvas>
+
+    <!-- Dynamic Horizontal Screen-Tear Slice Layer -->
+    <div id="intro-screen-slices" class="fixed inset-0 pointer-events-none z-[45] overflow-hidden"></div>
+
+    <!-- Step 0: Detailed Holographic "HỆ THỐNG ĐANG TẢI..." Terminal Loader -->
+    <div id="intro-boot-loader" class="relative z-20 flex flex-col items-center justify-center text-center px-6 w-full max-w-lg">
+      <div class="w-full sl-hologram-frame p-6">
+        <div class="sl-flare-top"></div>
+        <div class="sl-flare-bottom"></div>
+        <div class="sl-corner-dec sl-c-tl"></div>
+        <div class="sl-corner-dec sl-c-tr"></div>
+        <div class="sl-corner-dec sl-c-bl"></div>
+        <div class="sl-corner-dec sl-c-br"></div>
+
+        <div class="flex items-center justify-between text-[10px] font-mono text-cyan-300/80 tracking-[0.22em] mb-3">
+          <span>ARCHITECT // CORE v4.09</span>
+          <span class="text-[#00f0ff] animate-pulse">● SYNCHRONIZING</span>
+        </div>
+
+        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 mb-4 border border-[#38b6ff]/80 bg-[#051438]/90 shadow-[0_0_22px_rgba(0,240,255,0.5)]">
+          <span class="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping"></span>
+          <span class="font-sl-title text-xs sm:text-sm text-white sys-text-glow tracking-[0.26em]">
+            HỆ THỐNG ĐANG TẢI...
+          </span>
+        </div>
+
+        <div class="relative w-full h-3 bg-[#03091c] border border-[#38b6ff] overflow-hidden shadow-[0_0_25px_rgba(0,240,255,0.75)]">
+          <div id="intro-boot-bar" class="h-full bg-gradient-to-r from-[#1d4ed8] via-[#00f0ff] to-white transition-all duration-75" style="width: 0%"></div>
+        </div>
+
+        <div class="w-full flex justify-between items-center mt-3 font-mono text-[11px] text-[#7dd3fc] tracking-widest">
+          <span id="intro-boot-log">INITIALIZING DOUBLE DUNGEON PROTOCOL...</span>
+          <span id="intro-boot-pct" class="font-bold text-white">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Horizontal Anamorphic Light Beam Flare -->
+    <div id="intro-light-beam" class="stage-hidden pointer-events-none fixed left-0 right-0 top-1/2 -translate-y-1/2 h-2 bg-gradient-to-r from-transparent via-white to-transparent shadow-[0_0_60px_18px_#00f0ff,0_0_120px_36px_#1d4ed8] z-10 transition-all duration-300"></div>
+
+    <!-- Step A: Authentic Solo Leveling "NOTIFICATION - Are you sure?" Window -->
+    <div id="intro-first-notif" class="stage-hidden sl-notif-box z-20">
+      <div class="sl-laser-scan"></div>
+      <div class="sl-flare-top"></div>
+      <div class="sl-flare-bottom"></div>
+      <div class="sl-corner-dec sl-c-tl"></div>
+      <div class="sl-corner-dec sl-c-tr"></div>
+      <div class="sl-corner-dec sl-c-bl"></div>
+      <div class="sl-corner-dec sl-c-br"></div>
+
+      <!-- Top Micro Telemetry Bar -->
+      <div class="flex items-center justify-between text-[9px] font-mono text-cyan-300/75 tracking-[0.24em] mb-1.5">
+        <span>SYS_ID // 0x001_MONARCH</span>
+        <span>RANK: S-CLASS QUEST</span>
+      </div>
+
+      <div class="sl-notif-header">
+        <div class="sl-notif-icon-box">
+          <div class="sl-notif-icon-circle">!</div>
+        </div>
+        <div class="sl-notif-title-box">
+          <span class="sl-notif-title-text">NOTIFICATION</span>
+        </div>
+      </div>
+
+      <div class="sl-notif-body">
+        <p class="sl-notif-prompt">Are you sure?</p>
+        <span class="sl-notif-submeta">[ SECRET QUEST: AWAKENING OF THE PLAYER ]</span>
+      </div>
+
+      <div class="sl-notif-actions">
+        <button type="button" onclick="triggerNotificationFlood()" class="sl-notif-btn">YES</button>
+        <button type="button" onclick="triggerSystemDeleted()" class="sl-notif-btn sl-notif-btn-no">NO</button>
+      </div>
+    </div>
+
+    <!-- Step B: Container for 38 Flooding Blue NOTIFICATION Windows -->
+    <div id="intro-flood-container" class="fixed inset-0 pointer-events-none z-30 overflow-hidden"></div>
+
+    <!-- Step D: Final Corrupted Glitch Notification Window -->
+    <div id="intro-corrupt-notif" class="stage-hidden sl-notif-box corrupt-jitter z-40">
+      <div class="sl-laser-scan"></div>
+      <div class="sl-flare-top"></div>
+      <div class="sl-flare-bottom"></div>
+      <div class="sl-corner-dec sl-c-tl"></div>
+      <div class="sl-corner-dec sl-c-tr"></div>
+      <div class="sl-corner-dec sl-c-bl"></div>
+      <div class="sl-corner-dec sl-c-br"></div>
+
+      <!-- Dynamic Glitch Pixel Artifacts Container -->
+      <div id="corrupt-blocks-layer" class="absolute inset-0 overflow-hidden pointer-events-none z-30"></div>
+
+      <!-- Top Corrupted Telemetry Bar -->
+      <div class="flex items-center justify-between text-[9px] font-mono text-fuchsia-300/90 tracking-[0.22em] mb-1.5">
+        <span id="corrupt-hex-code">ERR_0x99F // ARCHITECT_OVERRIDE</span>
+        <span class="text-rose-400 animate-ping">● CRITICAL GLITCH</span>
+      </div>
+
+      <div class="sl-notif-header">
+        <div class="sl-notif-icon-box">
+          <div class="sl-notif-icon-circle">!</div>
+        </div>
+        <div class="sl-notif-title-box">
+          <span id="corrupt-title-text" class="sl-notif-title-text">~*?%/XFI%~X/</span>
+        </div>
+      </div>
+
+      <div class="sl-notif-body">
+        <p id="corrupt-body-text" class="sl-notif-prompt">%C89te $he System?</p>
+        <span id="corrupt-sub-text" class="sl-notif-submeta !text-fuchsia-300/80">[ WARNING: REALITY SYNCHRONIZATION UNSTABLE ]</span>
+      </div>
+
+      <div class="sl-notif-actions">
+        <button type="button" onclick="completeIntroAndEnterSystem()" class="sl-notif-btn relative">
+          <span id="corrupt-yes-text">YES</span>
+          <span id="corrupt-yes-block" class="hidden absolute inset-1 bg-white/85 mix-blend-overlay pointer-events-none"></span>
+        </button>
+        <button type="button" onclick="triggerSystemDeleted()" class="sl-notif-btn sl-notif-btn-no relative">
+          <span id="corrupt-no-text">NO</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===================================================================
+       STAGE 2: GOD-TIER SOLO LEVELING SYSTEM DASHBOARD
+       =================================================================== -->
+  <div id="system-dashboard-stage" class="stage-hidden relative min-h-screen flex flex-col justify-between z-10">
+
+    <!-- MULTI-LAYER MASTERPIECE SHADOW MONARCH WALLPAPER & VIDEO STAGE -->
+    <div id="bg-stage" class="bg-stage" aria-hidden="true">
+
+      <!-- Layer 1: High-Detail Solo Leveling Shadow Monarch & Throne Awakening SVG Artwork -->
+      <div id="sl-masterpiece-wallpaper">
+        <svg class="w-full h-full" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="abyssCore" cx="50%" cy="38%" r="58%">
+              <stop offset="0%" stop-color="#3b0764" stop-opacity="0.72" />
+              <stop offset="35%" stop-color="#0f296b" stop-opacity="0.55" />
+              <stop offset="72%" stop-color="#040b24" stop-opacity="0.92" />
+              <stop offset="100%" stop-color="#01030a" stop-opacity="1" />
+            </radialGradient>
+            <radialGradient id="monarchAura" cx="50%" cy="36%" r="36%">
+              <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.48" />
+              <stop offset="45%" stop-color="#a855f7" stop-opacity="0.32" />
+              <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+            </radialGradient>
+            <linearGradient id="pillarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#0b1d4a" stop-opacity="0.7" />
+              <stop offset="50%" stop-color="#050d26" stop-opacity="0.88" />
+              <stop offset="100%" stop-color="#020510" stop-opacity="0.96" />
+            </linearGradient>
+            <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="8" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+
+          <!-- Deep Abyssal Sky -->
+          <rect width="1920" height="1080" fill="url(#abyssCore)" />
+          <circle cx="960" cy="410" r="560" fill="url(#monarchAura)" />
+
+          <!-- Ancient Double Dungeon Colossal Temple Pillars (Perspective Architecture) -->
+          <g opacity="0.65">
+            <polygon points="80,0 250,0 330,1080 20,1080" fill="url(#pillarGrad)" stroke="#1e40af" stroke-width="1.5" />
+            <polygon points="360,0 470,0 520,1080 320,1080" fill="url(#pillarGrad)" stroke="#1d4ed8" stroke-width="1" />
+            <polygon points="1670,0 1840,0 1900,1080 1590,1080" fill="url(#pillarGrad)" stroke="#1e40af" stroke-width="1.5" />
+            <polygon points="1450,0 1560,0 1600,1080 1400,1080" fill="url(#pillarGrad)" stroke="#1d4ed8" stroke-width="1" />
+          </g>
+
+          <!-- Giant Sovereign Dimensional Magic Array in the Sky -->
+          <g transform="translate(960, 420)" opacity="0.52" filter="url(#neonGlow)">
+            <circle r="430" stroke="#00f0ff" stroke-width="2" stroke-opacity="0.45" stroke-dasharray="28 14 8 14" />
+            <circle r="375" stroke="#a855f7" stroke-width="1.8" stroke-opacity="0.5" stroke-dasharray="12 18" />
+            <circle r="310" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.4" />
+            <polygon points="0,-370 320,185 -320,185" stroke="#00f0ff" stroke-width="1.4" stroke-opacity="0.35" fill="none" />
+            <polygon points="0,370 320,-185 -320,-185" stroke="#a855f7" stroke-width="1.4" stroke-opacity="0.35" fill="none" />
+          </g>
+
+          <!-- Colossal Dimensional Chains Spanning Across the Abyss (Solo Leveling S2 OP Motif) -->
+          <g stroke="#38bdf8" stroke-opacity="0.35" stroke-width="3" fill="none">
+            <path d="M-50,220 Q480,430 960,360 T1970,190" stroke-dasharray="22 10" />
+            <path d="M-50,780 Q520,590 960,640 T1970,810" stroke="#a855f7" stroke-opacity="0.32" stroke-dasharray="26 12" />
+          </g>
+
+          <!-- Shadow Monarch Sung Jin-Woo Silhouette & Glowing Sovereign Eyes + Dual Daggers -->
+          <g transform="translate(960, 415)">
+            <!-- Shadow Cloak Billowing Silhouette -->
+            <path d="M0,-145 C42,-145 68,-110 74,-65 L145,165 L235,340 L-235,340 L-145,165 L-74,-65 C-68,-110 -42,-145 0,-145 Z"
+                  fill="#040817" stroke="#7e22ce" stroke-width="2" stroke-opacity="0.65" />
+            <!-- Glowing Cyan Monarch Eyes -->
+            <polygon points="-26,-88 -8,-82 -18,-76 -32,-83" fill="#00f0ff" />
+            <polygon points="26,-88 8,-82 18,-76 32,-83" fill="#00f0ff" />
+            <!-- Shadow Core Chest Crest -->
+            <polygon points="0,-25 22,15 0,68 -22,15" fill="#a855f7" fill-opacity="0.45" stroke="#00f0ff" stroke-width="1.5" />
+            <!-- Kamish's Wrath / Demon King's Longsword Energy Blades -->
+            <path d="M-85,35 L-290,-95 L-240,-20 L-75,65 Z" fill="#00f0ff" fill-opacity="0.38" stroke="#ffffff" stroke-width="1.2" />
+            <path d="M85,35 L290,-95 L240,-20 L75,65 Z" fill="#a855f7" fill-opacity="0.42" stroke="#ffffff" stroke-width="1.2" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Layer 2: 60FPS Zero-Lag Sprite-Cached Solo Leveling Canvas -->
+      <canvas id="sl-anime-bg-canvas"></canvas>
+
+      <!-- Layer 3: YouTube Embed Shell (Strictly hidden unless PLAYING is verified) -->
+      <div id="yt-frame-shell">
+        <div id="yt-bg-player"></div>
+      </div>
+
+      <!-- Layer 4: Subtle Dark Hologram Vignette -->
+      <div class="bg-atmosphere-vignette"></div>
+    </div>
+
+    <!-- TOP SYSTEM STATUS BAR (MONARCH STATUS HUD + ENERGETIC AUDIO CONTROLS) -->
+    <header class="relative z-10 w-full max-w-6xl mx-auto px-4 pt-3.5">
+      <div class="sl-hologram-frame px-4 py-3 flex flex-col gap-2.5">
+        <div class="sl-flare-top"></div>
+        <div class="sl-corner-dec sl-c-tl"></div>
+        <div class="sl-corner-dec sl-c-tr"></div>
+        <div class="sl-corner-dec sl-c-bl"></div>
+        <div class="sl-corner-dec sl-c-br"></div>
+
+        <!-- Primary Row: Monarch Identity + Energetic BGM & Theme Controls -->
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 relative z-10">
+          <!-- Left: [!] Icon Box + System Title + Player Monarch Telemetry -->
+          <div class="flex flex-wrap items-center gap-3.5">
+            <div class="sl-notif-icon-box !w-12 !h-12">
+              <div class="sl-notif-icon-circle">!</div>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="text-[10px] font-sl-title font-extrabold text-[#00f0ff] tracking-[0.22em]">
+                  SYSTEM // SUNG JIN-WOO
+                </span>
+                <span class="px-1.5 py-0.5 text-[9px] font-sl-title font-bold bg-purple-950/95 border border-purple-400/80 text-purple-200 tracking-widest">
+                  JOB: SHADOW MONARCH
+                </span>
+                <span class="px-1.5 py-0.5 text-[9px] font-sl-title font-bold bg-cyan-950/95 border border-cyan-400/80 text-cyan-200 tracking-widest">
+                  LVL. 100 // S-RANK
+                </span>
+              </div>
+              <h1 class="font-sl-title text-sm sm:text-lg font-black sys-text-glow tracking-wider mt-0.5">
+                HỆ THỐNG ÔN TẬP GIỮA KÌ 1 - KHỐI 10
+              </h1>
+            </div>
+          </div>
+
+          <!-- Right: Energetic BGM Controls + Mode Switcher + Wallpaper Theme Switcher -->
+          <div class="flex flex-wrap items-center gap-2">
+            <!-- Live BGM Equalizer & Mute Toggle -->
+            <button id="btn-toggle-bgm" type="button" class="px-2.5 py-1.5 border border-[#00f0ff] bg-[#061840] hover:bg-[#0e2a66] text-[11px] font-sl-title font-bold text-cyan-100 flex items-center gap-2 shadow-[0_0_12px_rgba(0,240,255,0.35)] transition cursor-pointer">
+              <div id="bgm-eq-bars" class="flex items-end gap-0.5 h-3.5 eq-active">
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+              </div>
+              <span id="bgm-icon">🔊</span>
+              <span id="bgm-label">35%</span>
+            </button>
+
+            <input id="bgm-volume" type="range" min="0" max="100" value="35" class="w-20 accent-[#00f0ff] cursor-pointer" title="Âm lượng nhạc nền sôi động" />
+
+            <!-- Track / Beat Style Selector -->
+            <button id="btn-bgm-style" type="button" class="px-2.5 py-1.5 border border-cyan-400/80 bg-[#07193e] hover:bg-[#102a63] text-[11px] font-sl-title font-bold text-[#00f0ff] shadow-[0_0_12px_rgba(0,240,255,0.3)] transition cursor-pointer" title="Đổi giai điệu nhạc nền sôi động">
+              <span id="bgm-style-label">⚡ BEAT: REAWAKE-R</span>
+            </button>
+
+            <button id="btn-toggle-sfx" type="button" class="px-2.5 py-1.5 border border-[#38b6ff]/80 bg-[#061538] hover:bg-[#0e2a66] text-[11px] font-sl-title font-bold text-cyan-100 shadow-[0_0_10px_rgba(0,240,255,0.25)] transition cursor-pointer">
+              <span id="sfx-label">SFX: ON</span>
+            </button>
+
+            <button id="btn-cycle-bg" type="button" class="px-2.5 py-1.5 border border-purple-400/85 bg-[#170936] hover:bg-[#2e1065] text-[11px] font-sl-title font-bold text-purple-200 shadow-[0_0_12px_rgba(168,85,247,0.4)] transition cursor-pointer" title="Đổi chủ đề hình nền">
+              <span id="bg-theme-label">🌌 NỀN: MONARCH</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Secondary Row: Detailed Solo Leveling Player Stats Telemetry Strip (HP / MP / STR / AGI / INT / SEN / SHADOWS) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 pt-2 border-t border-cyan-500/30 text-[10px] font-sl-title relative z-10">
+          <div class="px-2 py-1 bg-[#04102b]/90 border border-emerald-400/45 flex items-center justify-between">
+            <span class="text-emerald-300 font-bold">HP</span>
+            <span class="text-white font-black">95,400</span>
+          </div>
+          <div class="px-2 py-1 bg-[#04102b]/90 border border-cyan-400/45 flex items-center justify-between">
+            <span class="text-cyan-300 font-bold">MP</span>
+            <span class="text-[#00f0ff] font-black">150,000</span>
+          </div>
+          <div class="px-2 py-1 bg-[#04102b]/90 border border-blue-400/40 flex items-center justify-between">
+            <span class="text-blue-300">STR</span>
+            <span class="text-white font-bold">294</span>
+          </div>
+          <div class="px-2 py-1 bg-[#04102b]/90 border border-blue-400/40 flex items-center justify-between">
+            <span class="text-blue-300">AGI</span>
+            <span class="text-white font-bold">305</span>
+          </div>
+          <div class="px-2 py-1 bg-[#04102b]/90 border border-purple-400/45 flex items-center justify-between">
+            <span class="text-purple-300">INT</span>
+            <span class="text-purple-100 font-bold">340</span>
+          </div>
+          <div class="px-2 py-1 bg-[#04102b]/90 border border-blue-400/40 flex items-center justify-between">
+            <span class="text-blue-300">SEN</span>
+            <span class="text-white font-bold">288</span>
+          </div>
+          <div class="col-span-2 sm:col-span-1 px-2 py-1 bg-purple-950/75 border border-purple-400/60 flex items-center justify-between">
+            <span class="text-purple-200">SHADOWS</span>
+            <span class="text-[#00f0ff] font-black">1,320</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CENTER: SOLO LEVELING QUEST NOTIFICATION BANNER + 3 S-RANK DUNGEON GATES -->
+    <main class="relative z-10 w-full max-w-6xl mx-auto px-4 py-4 flex-1 flex flex-col justify-center">
+
+      <!-- Authentic Solo Leveling "[ ! ] QUEST // CHỌN CỔNG HẦM NGỤC" Header Banner with Telemetry -->
+      <div class="max-w-3xl mx-auto w-full mb-6">
+        <div class="sl-hologram-frame p-2">
+          <div class="sl-flare-top"></div>
+          <div class="sl-corner-dec sl-c-tl !w-3.5 !h-3.5"></div>
+          <div class="sl-corner-dec sl-c-tr !w-3.5 !h-3.5"></div>
+          <div class="sl-corner-dec sl-c-bl !w-3.5 !h-3.5"></div>
+          <div class="sl-corner-dec sl-c-br !w-3.5 !h-3.5"></div>
+
+          <div class="sl-notif-header !h-11">
+            <div class="sl-notif-icon-box">
+              <div class="sl-notif-icon-circle">!</div>
+            </div>
+            <div class="sl-notif-title-box flex items-center justify-between px-4">
+              <span class="hidden sm:inline text-[9px] font-mono text-cyan-300/85 tracking-[0.22em]">
+                [ EMERGENCY QUEST ]
+              </span>
+              <span class="sl-notif-title-text !text-xs sm:!text-base !tracking-[0.22em] mx-auto">
+                QUEST // CHỌN CỔNG HẦM NGỤC
+              </span>
+              <span class="hidden sm:inline text-[9px] font-mono text-[#00f0ff] tracking-[0.2em]">
+                CLEAR: 0 / 3
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 GOD-TIER S-RANK DUNGEON GATE CARDS -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-7">
+
+        <!-- ===============================================================
+             GATE 01: TIN HỌC 10 (ELECTRIC CYAN ARCHITECT GATE)
+             =============================================================== -->
+        <article class="sl-gate-card gate-theme-cyan p-5 sm:p-6 flex flex-col justify-between min-h-[440px]">
+          <div class="sl-laser-scan"></div>
+          <div class="sl-flare-top"></div>
+          <div class="sl-flare-bottom"></div>
+          <div class="sl-corner-dec sl-c-tl"></div>
+          <div class="sl-corner-dec sl-c-tr"></div>
+          <div class="sl-corner-dec sl-c-bl"></div>
+          <div class="sl-corner-dec sl-c-br"></div>
+
+          <!-- Top Gate Header Strip (Guaranteed Single-Line No-Wrap) -->
+          <div>
+            <div class="flex items-center justify-between text-[9px] font-mono text-cyan-300/85 tracking-[0.18em] mb-1.5">
+              <span>ID // DUNGEON_01</span>
+              <span class="text-[#00f0ff]">● S-RANK RED GATE</span>
+            </div>
+            <div class="sl-notif-header !h-10">
+              <div class="sl-notif-icon-box !w-11">
+                <span class="font-sl-title font-black text-xs text-[#00f0ff]">01</span>
+              </div>
+              <div class="sl-notif-title-box">
+                <span class="font-sl-title font-extrabold text-[11px] lg:text-xs tracking-[0.18em] text-cyan-100 whitespace-nowrap">
+                  GATE 01 // S-RANK
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center Multi-Ring Dimensional Gate Vortex + Subject Title -->
+          <div class="my-3.5 flex flex-col items-center text-center relative z-10">
+            <div class="relative w-36 h-36 flex items-center justify-center mb-2.5">
+              <svg class="w-36 h-36 overflow-visible" viewBox="0 0 160 160" fill="none">
+                <!-- Outer Sovereign Runic Ring -->
+                <g class="ring-cw">
+                  <circle cx="80" cy="80" r="72" stroke="#00f0ff" stroke-width="1.6" stroke-opacity="0.85" stroke-dasharray="16 6 4 6" />
+                  <circle cx="80" cy="80" r="65" stroke="#2979ff" stroke-width="1.1" stroke-opacity="0.6" />
+                  <polygon points="80,3 85,13 75,13" fill="#00f0ff" />
+                  <polygon points="80,157 85,147 75,147" fill="#00f0ff" />
+                  <polygon points="3,80 13,85 13,75" fill="#00f0ff" />
+                  <polygon points="157,80 147,85 147,75" fill="#00f0ff" />
+                </g>
+                <!-- Middle Octagram Magic Array -->
+                <g class="ring-ccw">
+                  <circle cx="80" cy="80" r="53" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="8 6" />
+                  <rect x="43" y="43" width="74" height="74" stroke="#00f0ff" stroke-width="1.3" stroke-opacity="0.65" />
+                  <rect x="43" y="43" width="74" height="74" stroke="#2979ff" stroke-width="1.3" stroke-opacity="0.65" transform="rotate(45 80 80)" />
+                </g>
+                <!-- Inner High-Speed Mana Ring -->
+                <g class="ring-fast-cw">
+                  <circle cx="80" cy="80" r="38" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.7" stroke-dasharray="12 18" />
+                </g>
+                <!-- Abyssal Portal Core -->
+                <circle cx="80" cy="80" r="31" fill="#03102b" stroke="#00f0ff" stroke-width="2.2" class="portal-core-pulse" />
+                <!-- Cyber Code Emblem -->
+                <path d="M71 72L62 80L71 88M89 72L98 80L89 88M83 69L77 91" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+
+            <h2 class="font-sl-title text-2xl sm:text-[26px] font-black text-white sys-text-glow tracking-wider">
+              TIN HỌC 10
+            </h2>
+            <p class="text-[11px] font-sl-ui font-bold text-cyan-200 tracking-[0.22em] uppercase mt-0.5">
+              Ôn Tập Giữa Kì 1
+            </p>
+
+            <!-- Detailed Single-Line Telemetry Pills (Never Wraps awkwardly) -->
+            <div class="w-full grid grid-cols-3 gap-1.5 mt-3 pt-2.5 border-t border-cyan-500/35 text-[9.5px] font-sl-title">
+              <div class="py-1.5 px-1.5 bg-cyan-950/75 border border-cyan-400/50 text-cyan-200 whitespace-nowrap overflow-hidden text-ellipsis">
+                BOSS: <span class="text-white font-bold">ARCHITECT</span>
+              </div>
+              <div class="py-1.5 px-1.5 bg-cyan-950/75 border border-cyan-400/50 text-cyan-200 whitespace-nowrap">
+                INT: <span class="text-[#00f0ff] font-bold">+50</span>
+              </div>
+              <div class="py-1.5 px-1.5 bg-cyan-950/75 border border-cyan-400/50 text-cyan-200 whitespace-nowrap">
+                EXP: <span class="text-[#00f0ff] font-bold">+9,500</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Authentic Solo Leveling Action Button -->
+          <button type="button"
+                  onclick="enterDungeonGate('tinhoc')"
+                  class="sl-gate-action-btn">
+            <span>[ VÀO CỔNG ]</span>
+          </button>
+        </article>
+
+        <!-- ===============================================================
+             GATE 02: SINH HỌC 10 (EMERALD LIFE SOVEREIGN GATE)
+             =============================================================== -->
+        <article class="sl-gate-card gate-theme-emerald p-5 sm:p-6 flex flex-col justify-between min-h-[440px]">
+          <div class="sl-laser-scan" style="background: linear-gradient(90deg, transparent 0%, #34d399 20%, #ffffff 50%, #34d399 80%, transparent 100%); box-shadow: 0 0 12px #34d399;"></div>
+          <div class="sl-flare-top" style="background: linear-gradient(90deg, transparent 0%, #10b981 20%, #ffffff 50%, #10b981 80%, transparent 100%); box-shadow: 0 0 16px 3px #34d399;"></div>
+          <div class="sl-flare-bottom" style="background: linear-gradient(90deg, transparent 0%, #10b981 20%, #ffffff 50%, #10b981 80%, transparent 100%); box-shadow: 0 0 16px 3px #34d399;"></div>
+          <div class="sl-corner-dec sl-c-tl"></div>
+          <div class="sl-corner-dec sl-c-tr"></div>
+          <div class="sl-corner-dec sl-c-bl"></div>
+          <div class="sl-corner-dec sl-c-br"></div>
+
+          <!-- Top Gate Header Strip (Guaranteed Single-Line No-Wrap) -->
+          <div>
+            <div class="flex items-center justify-between text-[9px] font-mono text-emerald-300/85 tracking-[0.18em] mb-1.5">
+              <span>ID // DUNGEON_02</span>
+              <span class="text-emerald-400">● S-RANK RED GATE</span>
+            </div>
+            <div class="sl-notif-header !h-10">
+              <div class="sl-notif-icon-box !w-11 !border-emerald-400/90">
+                <span class="font-sl-title font-black text-xs text-emerald-300">02</span>
+              </div>
+              <div class="sl-notif-title-box !border-emerald-400/90" style="background: linear-gradient(180deg, rgba(16, 185, 129, 0.32) 0%, rgba(6, 36, 32, 0.94) 100%);">
+                <span class="font-sl-title font-extrabold text-[11px] lg:text-xs tracking-[0.18em] text-emerald-100 whitespace-nowrap">
+                  GATE 02 // S-RANK
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center Multi-Ring Dimensional Gate Vortex + Subject Title -->
+          <div class="my-3.5 flex flex-col items-center text-center relative z-10">
+            <div class="relative w-36 h-36 flex items-center justify-center mb-2.5">
+              <svg class="w-36 h-36 overflow-visible" viewBox="0 0 160 160" fill="none">
+                <g class="ring-cw">
+                  <circle cx="80" cy="80" r="72" stroke="#34d399" stroke-width="1.6" stroke-opacity="0.85" stroke-dasharray="16 6 4 6" />
+                  <circle cx="80" cy="80" r="65" stroke="#10b981" stroke-width="1.1" stroke-opacity="0.6" />
+                  <polygon points="80,3 85,13 75,13" fill="#34d399" />
+                  <polygon points="80,157 85,147 75,147" fill="#34d399" />
+                  <polygon points="3,80 13,85 13,75" fill="#34d399" />
+                  <polygon points="157,80 147,85 147,75" fill="#34d399" />
+                </g>
+                <g class="ring-ccw">
+                  <circle cx="80" cy="80" r="53" stroke="#6ee7b7" stroke-width="1.5" stroke-dasharray="8 6" />
+                  <rect x="43" y="43" width="74" height="74" stroke="#34d399" stroke-width="1.3" stroke-opacity="0.65" />
+                  <rect x="43" y="43" width="74" height="74" stroke="#10b981" stroke-width="1.3" stroke-opacity="0.65" transform="rotate(45 80 80)" />
+                </g>
+                <g class="ring-fast-cw">
+                  <circle cx="80" cy="80" r="38" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.7" stroke-dasharray="12 18" />
+                </g>
+                <circle cx="80" cy="80" r="31" fill="#03221c" stroke="#34d399" stroke-width="2.2" class="portal-core-pulse" />
+                <!-- DNA Helix Emblem -->
+                <path d="M71 65C71 73 89 73 89 80C89 87 71 87 71 95M89 65C89 73 71 73 71 80C71 87 89 87 89 95" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" />
+                <line x1="73" y1="70" x2="87" y2="70" stroke="#6ee7b7" stroke-width="1.8" />
+                <line x1="73" y1="90" x2="87" y2="90" stroke="#6ee7b7" stroke-width="1.8" />
+              </svg>
+            </div>
+
+            <h2 class="font-sl-title text-2xl sm:text-[26px] font-black text-white tracking-wider" style="text-shadow: 0 0 12px #34d399, 0 0 28px #059669;">
+              SINH HỌC 10
+            </h2>
+            <p class="text-[11px] font-sl-ui font-bold text-emerald-200 tracking-[0.22em] uppercase mt-0.5">
+              Ôn Tập Giữa Kì 1
+            </p>
+
+            <!-- Detailed Single-Line Telemetry Pills -->
+            <div class="w-full grid grid-cols-3 gap-1.5 mt-3 pt-2.5 border-t border-emerald-500/35 text-[9.5px] font-sl-title">
+              <div class="py-1.5 px-1.5 bg-emerald-950/75 border border-emerald-400/50 text-emerald-200 whitespace-nowrap overflow-hidden text-ellipsis">
+                BOSS: <span class="text-white font-bold">BERU</span>
+              </div>
+              <div class="py-1.5 px-1.5 bg-emerald-950/75 border border-emerald-400/50 text-emerald-200 whitespace-nowrap">
+                VIT: <span class="text-emerald-300 font-bold">+50</span>
+              </div>
+              <div class="py-1.5 px-1.5 bg-emerald-950/75 border border-emerald-400/50 text-emerald-200 whitespace-nowrap">
+                EXP: <span class="text-emerald-300 font-bold">+9,500</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Button -->
+          <button type="button"
+                  onclick="enterDungeonGate('sinhhoc')"
+                  class="sl-gate-action-btn !border-emerald-400"
+                  style="background: linear-gradient(180deg, rgba(6, 78, 59, 0.94) 0%, rgba(2, 34, 27, 0.99) 100%); box-shadow: 0 0 20px rgba(16, 185, 129, 0.5), inset 0 0 16px rgba(52, 211, 153, 0.32);">
+            <span>[ VÀO CỔNG ]</span>
+          </button>
+        </article>
+
+        <!-- ===============================================================
+             GATE 03: LỊCH SỬ 10 (SHADOW MONARCH VIOLET SOVEREIGN GATE)
+             =============================================================== -->
+        <article class="sl-gate-card gate-theme-royal p-5 sm:p-6 flex flex-col justify-between min-h-[440px]">
+          <div class="sl-laser-scan" style="background: linear-gradient(90deg, transparent 0%, #c084fc 20%, #ffffff 50%, #c084fc 80%, transparent 100%); box-shadow: 0 0 12px #c084fc;"></div>
+          <div class="sl-flare-top" style="background: linear-gradient(90deg, transparent 0%, #8b5cf6 20%, #ffffff 50%, #8b5cf6 80%, transparent 100%); box-shadow: 0 0 16px 3px #c084fc;"></div>
+          <div class="sl-flare-bottom" style="background: linear-gradient(90deg, transparent 0%, #8b5cf6 20%, #ffffff 50%, #8b5cf6 80%, transparent 100%); box-shadow: 0 0 16px 3px #c084fc;"></div>
+          <div class="sl-corner-dec sl-c-tl"></div>
+          <div class="sl-corner-dec sl-c-tr"></div>
+          <div class="sl-corner-dec sl-c-bl"></div>
+          <div class="sl-corner-dec sl-c-br"></div>
+
+          <!-- Top Gate Header Strip (Guaranteed Single-Line No-Wrap) -->
+          <div>
+            <div class="flex items-center justify-between text-[9px] font-mono text-purple-300/85 tracking-[0.18em] mb-1.5">
+              <span>ID // DUNGEON_03</span>
+              <span class="text-purple-300">● S-RANK RED GATE</span>
+            </div>
+            <div class="sl-notif-header !h-10">
+              <div class="sl-notif-icon-box !w-11 !border-purple-400/90">
+                <span class="font-sl-title font-black text-xs text-purple-300">03</span>
+              </div>
+              <div class="sl-notif-title-box !border-purple-400/90" style="background: linear-gradient(180deg, rgba(147, 51, 234, 0.38) 0%, rgba(28, 12, 54, 0.94) 100%);">
+                <span class="font-sl-title font-extrabold text-[11px] lg:text-xs tracking-[0.18em] text-purple-100 whitespace-nowrap">
+                  GATE 03 // S-RANK
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center Multi-Ring Dimensional Gate Vortex + Subject Title -->
+          <div class="my-3.5 flex flex-col items-center text-center relative z-10">
+            <div class="relative w-36 h-36 flex items-center justify-center mb-2.5">
+              <svg class="w-36 h-36 overflow-visible" viewBox="0 0 160 160" fill="none">
+                <g class="ring-cw">
+                  <circle cx="80" cy="80" r="72" stroke="#c084fc" stroke-width="1.6" stroke-opacity="0.85" stroke-dasharray="16 6 4 6" />
+                  <circle cx="80" cy="80" r="65" stroke="#8b5cf6" stroke-width="1.1" stroke-opacity="0.6" />
+                  <polygon points="80,3 85,13 75,13" fill="#c084fc" />
+                  <polygon points="80,157 85,147 75,147" fill="#c084fc" />
+                  <polygon points="3,80 13,85 13,75" fill="#c084fc" />
+                  <polygon points="157,80 147,85 147,75" fill="#c084fc" />
+                </g>
+                <g class="ring-ccw">
+                  <circle cx="80" cy="80" r="53" stroke="#d8b4fe" stroke-width="1.5" stroke-dasharray="8 6" />
+                  <rect x="43" y="43" width="74" height="74" stroke="#c084fc" stroke-width="1.3" stroke-opacity="0.65" />
+                  <rect x="43" y="43" width="74" height="74" stroke="#8b5cf6" stroke-width="1.3" stroke-opacity="0.65" transform="rotate(45 80 80)" />
+                </g>
+                <g class="ring-fast-cw">
+                  <circle cx="80" cy="80" r="38" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.7" stroke-dasharray="12 18" />
+                </g>
+                <circle cx="80" cy="80" r="31" fill="#18072c" stroke="#c084fc" stroke-width="2.2" class="portal-core-pulse" />
+                <!-- Chrono Hourglass Emblem -->
+                <path d="M68 65H92M68 95H92M71 65V70C71 76 75 79 80 80C75 81 71 84 71 90V95M89 65V70C89 76 85 79 80 80C85 81 89 84 89 90V95" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+
+            <h2 class="font-sl-title text-2xl sm:text-[26px] font-black text-white tracking-wider" style="text-shadow: 0 0 12px #c084fc, 0 0 28px #7e22ce;">
+              LỊCH SỬ 10
+            </h2>
+            <p class="text-[11px] font-sl-ui font-bold text-purple-200 tracking-[0.22em] uppercase mt-0.5">
+              Ôn Tập Giữa Kì 1
+            </p>
+
+            <!-- Detailed Single-Line Telemetry Pills -->
+            <div class="w-full grid grid-cols-3 gap-1.5 mt-3 pt-2.5 border-t border-purple-500/35 text-[9.5px] font-sl-title">
+              <div class="py-1.5 px-1.5 bg-purple-950/75 border border-purple-400/50 text-purple-200 whitespace-nowrap overflow-hidden text-ellipsis">
+                BOSS: <span class="text-white font-bold">IGRIS</span>
+              </div>
+              <div class="py-1.5 px-1.5 bg-purple-950/75 border border-purple-400/50 text-purple-200 whitespace-nowrap">
+                SEN: <span class="text-purple-300 font-bold">+50</span>
+              </div>
+              <div class="py-1.5 px-1.5 bg-purple-950/75 border border-purple-400/50 text-purple-200 whitespace-nowrap">
+                EXP: <span class="text-purple-300 font-bold">+9,500</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Button -->
+          <button type="button"
+                  onclick="enterDungeonGate('lichsu')"
+                  class="sl-gate-action-btn !border-purple-400"
+                  style="background: linear-gradient(180deg, rgba(76, 29, 149, 0.94) 0%, rgba(30, 10, 64, 0.99) 100%); box-shadow: 0 0 20px rgba(168, 85, 247, 0.55), inset 0 0 16px rgba(192, 132, 252, 0.32);">
+            <span>[ VÀO CỔNG ]</span>
+          </button>
+        </article>
+
+      </div>
+    </main>
+
+    <footer class="relative z-10 text-center pb-3 px-4 text-[10px] text-cyan-200/70 font-sl-title tracking-[0.28em]">
+      SOLO LEVELING SYSTEM // SHADOW MONARCH EDITION
+    </footer>
+  </div>
+
+  <!-- ===================================================================
+       STAGE 3: ISOLATED FULLSCREEN DUNGEON GATE VIEW
+       (All initial UI hidden; Arrow-Only return button + Dimensional Warp)
+       =================================================================== -->
+  <div id="gate-fullscreen-stage" class="stage-hidden fixed inset-0 w-screen h-screen z-[9999] bg-black overflow-hidden">
+
+    <!-- Arrow-Only Return Button (No Text Clutter) -->
+    <button id="btn-return-system"
+            type="button"
+            onclick="exitDungeonGate()"
+            aria-label="Trở về Hệ Thống"
+            title="Trở về Hệ Thống"
+            class="sl-arrow-return-btn">
+      <svg class="w-5 h-5 text-white drop-shadow-[0_0_8px_#00f0ff]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5" />
+        <path d="M12 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <!-- Cinematic Dimensional Rift Warp Transition Overlay -->
+    <div id="gate-warp-flash" class="pointer-events-none fixed inset-0 z-[10000] bg-[#020512] flex flex-col items-center justify-center transition-opacity duration-500 opacity-0">
+      <canvas id="gate-warp-canvas" class="absolute inset-0 w-full h-full"></canvas>
+
+      <div class="relative z-10 sl-hologram-frame px-8 py-6 text-center max-w-md mx-4">
+        <div class="sl-flare-top"></div>
+        <div class="sl-flare-bottom"></div>
+        <div class="sl-corner-dec sl-c-tl"></div>
+        <div class="sl-corner-dec sl-c-tr"></div>
+        <div class="sl-corner-dec sl-c-bl"></div>
+        <div class="sl-corner-dec sl-c-br"></div>
+
+        <div class="text-[10px] font-mono text-[#00f0ff] tracking-[0.28em] mb-2">
+          DIMENSIONAL GATE // TELEPORTING PLAYER
+        </div>
+        <div id="gate-warp-text" class="font-sl-title text-base sm:text-xl font-black text-white sys-text-glow tracking-widest uppercase">
+          ĐANG DỊCH CHUYỂN VÀO HẦM NGỤC...
+        </div>
+        <div class="mt-4 w-full h-1.5 bg-[#040d26] border border-[#00f0ff] overflow-hidden">
+          <div id="gate-warp-bar" class="h-full bg-gradient-to-r from-[#2979ff] via-[#00f0ff] to-white transition-all duration-700" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full-Viewport Exam Iframe (Strictly unloaded on boot: src="about:blank") -->
+    <iframe id="gate-exam-iframe"
+            src="about:blank"
+            class="w-full h-full border-0 bg-white block"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen"
+            title="Cổng Ôn Tập Giữa Kì 1 Khối 10"></iframe>
+  </div>
+
+  <!-- ===================================================================
+       COMPLETE SOLO LEVELING SYSTEM ENGINE
+       =================================================================== -->
+  <script>
+    /*************************************************************************
+     * 1. DUNGEON GATE DEFINITIONS
+     *************************************************************************/
+    const DUNGEON_GATES = {
+      tinhoc: {
+        id: 'tinhoc',
+        name: 'TIN HỌC 10',
+        url: 'https://v0-k10gky1.vercel.app/'
+      },
+      sinhhoc: {
+        id: 'sinhhoc',
+        name: 'SINH HỌC 10',
+        url: 'https://yingseo.github.io/TestSinhHoc10-GKI/'
+      },
+      lichsu: {
+        id: 'lichsu',
+        name: 'LỊCH SỬ 10',
+        url: 'https://yingseo.github.io/LichSu-GKI/'
+      }
+    };
+
+    let systemTerminated = false;
+    let activeMediaMode = 'synth'; // 'youtube' | 'synth'
+
+    /*************************************************************************
+     * 2. HIGH-ENERGY 145-BPM "REAWAKE-R" ANIME SYNTH-ROCK AUDIO ENGINE
+     *    (Uses Web Audio Lookahead Scheduling for Zero Main-Thread Lag)
+     *************************************************************************/
+    class SoloLevelingAudioEngine {
+      constructor() {
+        this.ctx = null;
+        this.noiseBuffer = null;
+        this.sfxEnabled = true;
+        this.bgmEnabled = true;
+        this.bgmVolume = 0.35; // Energetic default volume (35%)
+        this.bgmStyle = 0; // 0: ReawakeR 145 BPM, 1: Shadow Raid 155 BPM
+        this.bgmTimer = null;
+        this.nextStepTime = 0;
+        this.currentStep = 0;
+      }
+
+      initContext() {
+        if (systemTerminated) return;
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioCtx();
+          // Pre-compute white noise buffer once for crisp electronic snare & hi-hats
+          const bufferSize = this.ctx.sampleRate * 0.25;
+          this.noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+          const output = this.noiseBuffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            output[i] = Math.random() * 2 - 1;
+          }
+        }
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      /* Punchy Electronic Kick Drum */
+      triggerKick(time, masterGain) {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(145, time);
+        osc.frequency.exponentialRampToValueAtTime(36, time + 0.11);
+
+        gain.gain.setValueAtTime(masterGain * 0.85, time);
+        gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.16);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(time);
+        osc.stop(time + 0.17);
+      }
+
+      /* Crisp Cyber Snare & Hi-Hat using pre-rendered Noise Buffer */
+      triggerPercussion(time, isSnare, masterGain) {
+        if (!this.noiseBuffer) return;
+        const src = this.ctx.createBufferSource();
+        src.buffer = this.noiseBuffer;
+
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = isSnare ? 'bandpass' : 'highpass';
+        filter.frequency.setValueAtTime(isSnare ? 1850 : 7500, time);
+
+        const gain = this.ctx.createGain();
+        const peak = isSnare ? masterGain * 0.42 : masterGain * 0.15;
+        const dur = isSnare ? 0.13 : 0.045;
+
+        gain.gain.setValueAtTime(peak, time);
+        gain.gain.exponentialRampToValueAtTime(0.0001, time + dur);
+
+        src.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+        src.start(time);
+        src.stop(time + dur + 0.01);
+      }
+
+      /* Driving Oktavist Sub-Bass & Energetic Anime Lead Synth */
+      scheduleStep(step, time) {
+        const master = Math.max(0.0001, this.bgmVolume * 0.42);
+        const s16 = step % 16;
+
+        // 1. Driving 4-on-the-floor + syncopated Anime Rock Kick
+        if (s16 === 0 || s16 === 4 || s16 === 8 || s16 === 10 || s16 === 12) {
+          this.triggerKick(time, master);
+        }
+
+        // 2. Snare on backbeats (4 & 12) + Rapid 16th Hi-Hats
+        if (s16 === 4 || s16 === 12) {
+          this.triggerPercussion(time, true, master);
+        } else if (s16 % 2 === 1 || s16 === 14) {
+          this.triggerPercussion(time, false, master);
+        }
+
+        // 3. Aggressive Rolling Cyber-Bass (D minor -> Bb -> C -> A)
+        const bar = Math.floor(step / 16) % 4;
+        const rootBass = [73.42, 58.27, 65.41, 55.0][bar]; // D2, Bb1, C2, A1
+        const bassFreq = s16 % 2 === 0 ? rootBass : rootBass * 2;
+
+        const bassOsc = this.ctx.createOscillator();
+        const bassFilter = this.ctx.createBiquadFilter();
+        const bassGain = this.ctx.createGain();
+
+        bassOsc.type = 'sawtooth';
+        bassOsc.frequency.setValueAtTime(bassFreq, time);
+
+        bassFilter.type = 'lowpass';
+        bassFilter.frequency.setValueAtTime(s16 % 4 === 0 ? 780 : 420, time);
+
+        bassGain.gain.setValueAtTime(0.0001, time);
+        bassGain.gain.linearRampToValueAtTime(master * 0.42, time + 0.01);
+        bassGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.11);
+
+        bassOsc.connect(bassFilter);
+        bassFilter.connect(bassGain);
+        bassGain.connect(this.ctx.destination);
+        bassOsc.start(time);
+        bassOsc.stop(time + 0.12);
+
+        // 4. High-Energy "ReawakeR" / Shadow Raid Lead Synth Hook
+        const melodyA = [
+          587.33, 0, 698.46, 659.25, 587.33, 0, 880.0, 783.99,
+          698.46, 659.25, 587.33, 523.25, 659.25, 0, 587.33, 440.0
+        ];
+        const melodyB = [
+          880.0, 587.33, 698.46, 880.0, 1046.5, 880.0, 783.99, 698.46,
+          659.25, 523.25, 587.33, 659.25, 783.99, 698.46, 659.25, 554.37
+        ];
+        const noteFreq = (this.bgmStyle === 0 ? melodyA : melodyB)[s16];
+
+        if (noteFreq > 0) {
+          const leadOsc = this.ctx.createOscillator();
+          const leadGain = this.ctx.createGain();
+          leadOsc.type = this.bgmStyle === 0 ? 'square' : 'sawtooth';
+          leadOsc.frequency.setValueAtTime(noteFreq, time);
+
+          leadGain.gain.setValueAtTime(0.0001, time);
+          leadGain.gain.linearRampToValueAtTime(master * 0.2, time + 0.012);
+          leadGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.14);
+
+          leadOsc.connect(leadGain);
+          leadGain.connect(this.ctx.destination);
+          leadOsc.start(time);
+          leadOsc.stop(time + 0.15);
+        }
+      }
+
+      startFallbackBGM() {
+        if (this.bgmTimer || systemTerminated) return;
+        this.initContext();
+        this.nextStepTime = this.ctx.currentTime + 0.05;
+
+        this.bgmTimer = setInterval(() => {
+          if (systemTerminated || !this.bgmEnabled || activeMediaMode !== 'synth') return;
+          try {
+            this.initContext();
+            const bpm = this.bgmStyle === 0 ? 145 : 156;
+            const secondsPer16th = 60 / bpm / 4;
+
+            while (this.nextStepTime < this.ctx.currentTime + 0.12) {
+              this.scheduleStep(this.currentStep, this.nextStepTime);
+              this.nextStepTime += secondsPer16th;
+              this.currentStep++;
+            }
+          } catch (e) {}
+        }, 40);
+      }
+
+      stopFallbackBGM() {
+        if (this.bgmTimer) {
+          clearInterval(this.bgmTimer);
+          this.bgmTimer = null;
+        }
+      }
+
+      /* Soft "ReawakeR"-inspired Dark Synth Pulse when YouTube/Local MP4 isn't active yet */
+      startFallbackBGM() {
+        if (this.bgmInterval || systemTerminated) return;
+        this.initContext();
+        // Driving D-minor / E-Phrygian dark anime bassline & synth arpeggio
+        const bassNotes = [73.42, 73.42, 87.31, 73.42, 65.41, 65.41, 82.41, 77.78];
+        const arpNotes  = [293.66, 349.23, 440.0, 587.33, 523.25, 440.0, 349.23, 329.63];
+
+        this.bgmInterval = setInterval(() => {
+          if (systemTerminated || !this.bgmEnabled || activeMediaMode !== 'synth') return;
+          try {
+            this.initContext();
+            const now = this.ctx.currentTime;
+            const step = this.bgmStep % bassNotes.length;
+
+            // Sub Bass Pulse
+            const bassOsc = this.ctx.createOscillator();
+            const bassFilter = this.ctx.createBiquadFilter();
+            const bassGain = this.ctx.createGain();
+            bassOsc.type = 'sawtooth';
+            bassOsc.frequency.setValueAtTime(bassNotes[step], now);
+
+            bassFilter.type = 'lowpass';
+            bassFilter.frequency.setValueAtTime(260, now);
+
+            const vol = Math.max(0.0001, this.bgmVolume * 0.22);
+            bassGain.gain.setValueAtTime(0.0001, now);
+            bassGain.gain.linearRampToValueAtTime(vol, now + 0.02);
+            bassGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+
+            bassOsc.connect(bassFilter);
+            bassFilter.connect(bassGain);
+            bassGain.connect(this.ctx.destination);
+            bassOsc.start(now);
+            bassOsc.stop(now + 0.24);
+
+            // High Crystal Synth Pluck
+            const arpOsc = this.ctx.createOscillator();
+            const arpGain = this.ctx.createGain();
+            arpOsc.type = 'triangle';
+            arpOsc.frequency.setValueAtTime(arpNotes[step], now);
+
+            const arpVol = Math.max(0.0001, this.bgmVolume * 0.09);
+            arpGain.gain.setValueAtTime(0.0001, now);
+            arpGain.gain.linearRampToValueAtTime(arpVol, now + 0.015);
+            arpGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.19);
+
+            arpOsc.connect(arpGain);
+            arpGain.connect(this.ctx.destination);
+            arpOsc.start(now);
+            arpOsc.stop(now + 0.21);
+
+            this.bgmStep++;
+          } catch (e) {}
+        }, 230);
+      }
+
+      stopFallbackBGM() {
+        if (this.bgmInterval) {
+          clearInterval(this.bgmInterval);
+          this.bgmInterval = null;
+        }
+      }
+
+      /* Window Materialize Chime */
+      playWindowOpen() {
+        if (!this.sfxEnabled || systemTerminated) return;
+        try {
+          this.initContext();
+          const now = this.ctx.currentTime;
+          const freqs = [1046.5, 1567.98, 2093.0];
+          freqs.forEach((f, i) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            const t = now + i * 0.035;
+            osc.frequency.setValueAtTime(f, t);
+            gain.gain.setValueAtTime(0.001, t);
+            gain.gain.linearRampToValueAtTime(0.09, t + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.36);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(t);
+            osc.stop(t + 0.38);
+          });
+        } catch (e) {}
+      }
+
+      /* Rapid Flood Spawn Glitch Sound */
+      playFloodGlitch(idx = 0) {
+        if (!this.sfxEnabled || systemTerminated) return;
+        try {
+          this.initContext();
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = idx % 2 === 0 ? 'sawtooth' : 'square';
+
+          const baseFreq = 220 + ((idx * 47) % 680);
+          osc.frequency.setValueAtTime(baseFreq, now);
+          osc.frequency.exponentialRampToValueAtTime(95, now + 0.075);
+
+          gain.gain.setValueAtTime(0.075, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.085);
+        } catch (e) {}
+      }
+
+      /* Abrupt Blackout Sub-Drop */
+      playBlackoutDrop() {
+        if (!this.sfxEnabled || systemTerminated) return;
+        try {
+          this.initContext();
+          const now = this.ctx.currentTime;
+          const sub = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          sub.type = 'sine';
+          sub.frequency.setValueAtTime(140, now);
+          sub.frequency.exponentialRampToValueAtTime(32, now + 0.5);
+
+          gain.gain.setValueAtTime(0.28, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.55);
+
+          sub.connect(gain);
+          gain.connect(this.ctx.destination);
+          sub.start(now);
+          sub.stop(now + 0.56);
+        } catch (e) {}
+      }
+
+      /* Corrupted Digital Scramble Tick */
+      playCorruptTick() {
+        if (!this.sfxEnabled || systemTerminated) return;
+        try {
+          this.initContext();
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(900 + Math.random() * 1600, now);
+          gain.gain.setValueAtTime(0.03, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.035);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.04);
+        } catch (e) {}
+      }
+
+      /* Hover Tick */
+      playHover() {
+        if (!this.sfxEnabled || systemTerminated) return;
+        try {
+          this.initContext();
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(1950, now);
+          osc.frequency.exponentialRampToValueAtTime(2900, now + 0.04);
+          gain.gain.setValueAtTime(0.045, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.05);
+        } catch (e) {}
+      }
+
+      /* System Awakening Chime */
+      playAwakenFanfare() {
+        if (!this.sfxEnabled || systemTerminated) return;
+        try {
+          this.initContext();
+          const now = this.ctx.currentTime;
+          const notes = [587.33, 880, 1174.66, 1760, 2349.32];
+          notes.forEach((f, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+            const t = now + idx * 0.045;
+            osc.frequency.setValueAtTime(f, t);
+            gain.gain.setValueAtTime(0.001, t);
+            gain.gain.linearRampToValueAtTime(0.11, t + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(t);
+            osc.stop(t + 0.95);
+          });
+        } catch (e) {}
+      }
+
+      /* Fatal System Deletion Sound (When user clicks NO) */
+      playSystemDeletedSound() {
+        try {
+          this.stopFallbackBGM();
+          if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioCtx();
+          }
+          if (this.ctx.state === 'suspended') {
+            this.ctx.resume();
+          }
+          const now = this.ctx.currentTime;
+          const osc1 = this.ctx.createOscillator();
+          const osc2 = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc1.type = 'sawtooth';
+          osc2.type = 'square';
+          osc1.frequency.setValueAtTime(320, now);
+          osc1.frequency.exponentialRampToValueAtTime(28, now + 0.85);
+          osc2.frequency.setValueAtTime(160, now);
+          osc2.frequency.exponentialRampToValueAtTime(22, now + 0.85);
+
+          gain.gain.setValueAtTime(0.28, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
+
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc1.start(now);
+          osc2.start(now);
+          osc1.stop(now + 0.92);
+          osc2.stop(now + 0.92);
+        } catch (e) {}
+      }
+
+      /* Dimensional Gate Hyperspace Warp Sound */
+      playGateWarpSwoosh() {
+        if (!this.sfxEnabled || systemTerminated) return;
+        try {
+          this.initContext();
+          const now = this.ctx.currentTime;
+          // Deep sub-drop + rising dimensional resonance
+          const sub = this.ctx.createOscillator();
+          const shimmer = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          sub.type = 'sawtooth';
+          shimmer.type = 'triangle';
+
+          sub.frequency.setValueAtTime(65, now);
+          sub.frequency.exponentialRampToValueAtTime(240, now + 0.55);
+          sub.frequency.exponentialRampToValueAtTime(48, now + 1.15);
+
+          shimmer.frequency.setValueAtTime(320, now);
+          shimmer.frequency.exponentialRampToValueAtTime(1960, now + 0.85);
+
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(0.18, now + 0.15);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+
+          sub.connect(gain);
+          shimmer.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          sub.start(now);
+          shimmer.start(now);
+          sub.stop(now + 1.22);
+          shimmer.stop(now + 1.22);
+        } catch (e) {}
+      }
+    }
+
+    const systemAudio = new SoloLevelingAudioEngine();
+
+    /*************************************************************************
+     * 3. ZERO-LAG 60FPS SOLO LEVELING BACKGROUND CANVAS (OFFSCREEN SPRITE CACHE)
+     *************************************************************************/
+    let bgThemeIndex = 0;
+    const BG_THEMES = [
+      { name: 'MONARCH', primaryHue: 192, secondaryHue: 276, boltColor: '#00f0ff', boltAlt: '#c084fc' },
+      { name: 'S-RANK GATE', primaryHue: 198, secondaryHue: 218, boltColor: '#38bdf8', boltAlt: '#ffffff' },
+      { name: 'BLOOD IGRIS', primaryHue: 348, secondaryHue: 278, boltColor: '#fb7185', boltAlt: '#c084fc' }
+    ];
+
+    /* Pre-render glowing orb sprite once per hue to eliminate ctx.shadowBlur lag */
+    const orbSpriteCache = {};
+    function getGlowSprite(hue) {
+      if (orbSpriteCache[hue]) return orbSpriteCache[hue];
+      const off = document.createElement('canvas');
+      off.width = 32;
+      off.height = 32;
+      const octx = off.getContext('2d');
+      const grad = octx.createRadialGradient(16, 16, 1, 16, 16, 15);
+      grad.addColorStop(0, '#ffffff');
+      grad.addColorStop(0.28, `hsla(${hue}, 100%, 68%, 0.9)`);
+      grad.addColorStop(1, `hsla(${hue}, 100%, 50%, 0)`);
+      octx.fillStyle = grad;
+      octx.beginPath();
+      octx.arc(16, 16, 15, 0, Math.PI * 2);
+      octx.fill();
+      orbSpriteCache[hue] = off;
+      return off;
+    }
+
+    function initShadowMonarchCanvas() {
+      const canvas = document.getElementById('sl-anime-bg-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d', { alpha: true });
+
+      let w = (canvas.width = window.innerWidth);
+      let h = (canvas.height = window.innerHeight);
+
+      window.addEventListener('resize', () => {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }, { passive: true });
+
+      // 52 Sprite-Cached Mana Embers (Ultra-smooth 60FPS with zero shadowBlur overhead)
+      const particles = Array.from({ length: 52 }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        size: 10 + Math.random() * 18,
+        vx: (Math.random() - 0.5) * 0.65,
+        vy: -0.65 - Math.random() * 1.65,
+        alpha: 0.35 + Math.random() * 0.6,
+        isPrimary: Math.random() > 0.42
+      }));
+
+      const lightnings = [];
+      function spawnManaLightning() {
+        const theme = BG_THEMES[bgThemeIndex];
+        const startX = w * (0.15 + Math.random() * 0.7);
+        const points = [{ x: startX, y: 0 }];
+        let curX = startX;
+        let curY = 0;
+        while (curY < h) {
+          curX += (Math.random() - 0.5) * 90;
+          curY += 45 + Math.random() * 60;
+          points.push({ x: curX, y: curY });
+        }
+        lightnings.push({
+          points,
+          life: 1.0,
+          color: Math.random() > 0.4 ? theme.boltColor : theme.boltAlt
+        });
+      }
+
+      let angle = 0;
+      let frameCount = 0;
+
+      function renderFrame() {
+        if (systemTerminated) return;
+
+        // Pause background canvas while inside a Gate or hidden to save 100% CPU/GPU
+        const dashStage = document.getElementById('system-dashboard-stage');
+        if (!dashStage || dashStage.classList.contains('stage-hidden') || document.hidden) {
+          requestAnimationFrame(renderFrame);
+          return;
+        }
+
+        frameCount++;
+        angle += 0.004;
+        const theme = BG_THEMES[bgThemeIndex];
+
+        ctx.clearRect(0, 0, w, h);
+
+        // 1. Rotating Dimensional Gate Halo behind the Cards
+        const cx = w * 0.5;
+        const cy = h * 0.45;
+        const baseRadius = Math.min(w, h) * 0.36;
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(angle);
+        ctx.strokeStyle = `hsla(${theme.primaryHue}, 100%, 62%, 0.22)`;
+        ctx.lineWidth = 1.8;
+        ctx.setLineDash([22, 12, 6, 12]);
+        ctx.beginPath();
+        ctx.arc(0, 0, baseRadius, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.rotate(-angle * 2.0);
+        ctx.strokeStyle = `hsla(${theme.secondaryHue}, 95%, 68%, 0.22)`;
+        ctx.lineWidth = 1.4;
+        ctx.setLineDash([10, 14]);
+        ctx.beginPath();
+        ctx.arc(0, 0, baseRadius * 0.78, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+
+        // 2. Blit Pre-Rendered Glow Sprites (Zero GPU shadowBlur stalls)
+        const primarySprite = getGlowSprite(theme.primaryHue);
+        const secondarySprite = getGlowSprite(theme.secondaryHue);
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.y < -20) {
+            p.y = h + 20;
+            p.x = Math.random() * w;
+          }
+          if (p.x < -20) p.x = w + 10;
+          if (p.x > w + 20) p.x = -10;
+
+          ctx.globalAlpha = p.alpha;
+          const sprite = p.isPrimary ? primarySprite : secondarySprite;
+          ctx.drawImage(sprite, p.x - p.size * 0.5, p.y - p.size * 0.5, p.size, p.size);
+        }
+        ctx.globalAlpha = 1;
+
+        // 3. Periodic Sovereign Lightning Bolts
+        if (frameCount % 110 === 0 && Math.random() < 0.75) {
+          spawnManaLightning();
+        }
+        for (let i = lightnings.length - 1; i >= 0; i--) {
+          const bolt = lightnings[i];
+          bolt.life -= 0.065;
+          if (bolt.life <= 0) {
+            lightnings.splice(i, 1);
+            continue;
+          }
+          ctx.save();
+          ctx.strokeStyle = bolt.color;
+          ctx.globalAlpha = bolt.life * 0.72;
+          ctx.lineWidth = bolt.life * 2.6;
+          ctx.beginPath();
+          for (let j = 0; j < bolt.points.length; j++) {
+            const pt = bolt.points[j];
+            if (j === 0) ctx.moveTo(pt.x, pt.y);
+            else ctx.lineTo(pt.x, pt.y);
+          }
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        requestAnimationFrame(renderFrame);
+      }
+
+      requestAnimationFrame(renderFrame);
+    }
+
+    /*************************************************************************
+     * 3B. INTRO REAL-TIME DIGITAL GLITCH & LIGHTNING CANVAS
+     *************************************************************************/
+    let introGlitchIntensity = 0.15; // 0.15 normal, 1.0 during flood/corrupt
+    function initIntroGlitchCanvas() {
+      const canvas = document.getElementById('intro-glitch-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      let w = (canvas.width = window.innerWidth);
+      let h = (canvas.height = window.innerHeight);
+
+      window.addEventListener('resize', () => {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      });
+
+      const codeStrings = [
+        '0x7F8A_ARCHITECT_OVERRIDE',
+        'SYS_ERR // DOUBLE_DUNGEON',
+        'PLAYER_QUALIFICATION_TEST',
+        'SHADOW_EXTRACTION_0x99',
+        'WARNING: HEARTBEAT_CRITICAL',
+        'ARISE // SOVEREIGN_PROTOCOL'
+      ];
+
+      function drawIntroGlitch() {
+        const introStage = document.getElementById('intro-stage');
+        if (systemTerminated || !introStage || introStage.classList.contains('stage-hidden')) return;
+
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.32)';
+        ctx.fillRect(0, 0, w, h);
+
+        // Draw subtle cyber-grid and horizontal glitch scan-tears
+        const barCount = introGlitchIntensity > 0.5 ? 9 : 2;
+        for (let i = 0; i < barCount; i++) {
+          if (Math.random() > introGlitchIntensity) continue;
+          const y = Math.random() * h;
+          const bh = 2 + Math.random() * (introGlitchIntensity * 28);
+          ctx.fillStyle =
+            Math.random() > 0.35
+              ? `rgba(0, 240, 255, ${0.08 + introGlitchIntensity * 0.18})`
+              : `rgba(217, 70, 239, ${0.08 + introGlitchIntensity * 0.18})`;
+          ctx.fillRect(0, y, w, bh);
+        }
+
+        // Floating Solo Leveling System Hex Codes
+        if (Math.random() < introGlitchIntensity * 0.85) {
+          ctx.font = '600 11px Orbitron, monospace';
+          ctx.fillStyle = Math.random() > 0.3 ? 'rgba(0, 240, 255, 0.45)' : 'rgba(244, 63, 94, 0.55)';
+          const str = codeStrings[Math.floor(Math.random() * codeStrings.length)];
+          ctx.fillText(str, Math.random() * (w - 220), Math.random() * h);
+        }
+
+        requestAnimationFrame(drawIntroGlitch);
+      }
+
+      requestAnimationFrame(drawIntroGlitch);
+    }
+
+    /*************************************************************************
+     * 4. YOUTUBE ANTI-ERROR ENGINE + ENERGETIC 145-BPM SYNTH FALLBACK
+     * - Strictly hides YouTube iframe unless PLAYING is verified (NO white TV screen!)
+     *************************************************************************/
+    let ytPlayer = null;
+    let ytReady = false;
+    let ytLoopWatchdog = null;
+    const YT_CANDIDATE_IDS = ['C0zMWogztQs', 'y2RC152697Q', 'OdQ1_7X2rMY'];
+    let currentYtIndex = 0;
+    const LOOP_END_SECONDS = 87;
+
+    (function loadYouTubeAPI() {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScript = document.getElementsByTagName('script')[0];
+      firstScript.parentNode.insertBefore(tag, firstScript);
+    })();
+
+    window.onYouTubeIframeAPIReady = function () {
+      if (systemTerminated) return;
+      ytPlayer = new YT.Player('yt-bg-player', {
+        videoId: YT_CANDIDATE_IDS[currentYtIndex],
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          disablekb: 1,
+          loop: 1,
+          start: 0,
+          end: LOOP_END_SECONDS,
+          modestbranding: 1,
+          playsinline: 1,
+          rel: 0,
+          iv_load_policy: 3,
+          mute: 1,
+          origin: window.location.origin
+        },
+        events: {
+          onReady: (e) => {
+            ytReady = true;
+            e.target.setVolume(Math.round(systemAudio.bgmVolume * 100));
+            e.target.playVideo();
+
+            if (ytLoopWatchdog) clearInterval(ytLoopWatchdog);
+            ytLoopWatchdog = setInterval(() => {
+              if (systemTerminated || !ytReady || !ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+              try {
+                const cur = ytPlayer.getCurrentTime();
+                if (cur >= LOOP_END_SECONDS) {
+                  ytPlayer.seekTo(0, true);
+                  ytPlayer.playVideo();
+                }
+              } catch (err) {}
+            }, 400);
+          },
+          onStateChange: (e) => {
+            if (systemTerminated) return;
+            const ytShell = document.getElementById('yt-frame-shell');
+
+            // ONLY reveal YouTube iframe when YT.PlayerState.PLAYING (1) is confirmed!
+            if (e.data === YT.PlayerState.PLAYING) {
+              activeMediaMode = 'youtube';
+              systemAudio.stopFallbackBGM();
+              if (ytShell) ytShell.classList.add('yt-verified-playing');
+            } else if (e.data === YT.PlayerState.ENDED) {
+              ytPlayer.seekTo(0, true);
+              ytPlayer.playVideo();
+            }
+          },
+          onError: () => {
+            const ytShell = document.getElementById('yt-frame-shell');
+            if (ytShell) ytShell.classList.remove('yt-verified-playing');
+
+            currentYtIndex++;
+            if (currentYtIndex < YT_CANDIDATE_IDS.length && ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+              try {
+                ytPlayer.loadVideoById({
+                  videoId: YT_CANDIDATE_IDS[currentYtIndex],
+                  startSeconds: 0,
+                  endSeconds: LOOP_END_SECONDS
+                });
+              } catch (e) {}
+            } else {
+              // Run 60FPS Anime Canvas + High-Energy 145-BPM Synth-Rock BGM
+              activeMediaMode = 'synth';
+              systemAudio.startFallbackBGM();
+            }
+          }
+        }
+      });
+    };
+
+    function unlockAndPlaySoftBackgroundMedia() {
+      if (systemTerminated) return;
+      systemAudio.initContext();
+      const targetVol = Math.round(systemAudio.bgmVolume * 100);
+
+      // Start energetic 145-BPM BGM immediately; if YouTube verifies PLAYING, it seamlessly takes over
+      systemAudio.startFallbackBGM();
+
+      if (ytReady && ytPlayer && typeof ytPlayer.unMute === 'function') {
+        try {
+          ytPlayer.seekTo(0, true);
+          if (systemAudio.bgmEnabled) {
+            ytPlayer.unMute();
+            ytPlayer.setVolume(targetVol);
+          } else {
+            ytPlayer.mute();
+          }
+          ytPlayer.playVideo();
+        } catch (err) {}
+      }
+    }
+
+    /*************************************************************************
+     * 5. INTRO GLITCH SEQUENCE & "NO" -> "SYSTEM HAS DELETED" LOCKOUT
+     *************************************************************************/
+    let corruptScrambleInterval = null;
+    let floodInProgress = false;
+    let floodTimeouts = [];
+
+    function clearAllIntroTimers() {
+      if (corruptScrambleInterval) {
+        clearInterval(corruptScrambleInterval);
+        corruptScrambleInterval = null;
+      }
+      floodTimeouts.forEach((t) => clearTimeout(t));
+      floodTimeouts = [];
+    }
+
+    /* PERMANENT TERMINAL LOCKOUT WHEN USER CLICKS "NO" */
+    window.triggerSystemDeleted = function () {
+      if (systemTerminated) return;
+      systemTerminated = true;
+
+      clearAllIntroTimers();
+      if (ytLoopWatchdog) {
+        clearInterval(ytLoopWatchdog);
+        ytLoopWatchdog = null;
+      }
+
+      // Play dark system deletion sound before freezing
+      systemAudio.playSystemDeletedSound();
+
+      // Stop and destroy all background video/audio
+      try {
+        if (ytPlayer && typeof ytPlayer.stopVideo === 'function') {
+          ytPlayer.mute();
+          ytPlayer.stopVideo();
+        }
+      } catch (e) {}
+
+      // Remove Intro, Dashboard, and Gate DOM nodes so nothing can be interacted with
+      const introStage = document.getElementById('intro-stage');
+      const dashboardStage = document.getElementById('system-dashboard-stage');
+      const gateStage = document.getElementById('gate-fullscreen-stage');
+      if (introStage) introStage.remove();
+      if (dashboardStage) dashboardStage.remove();
+      if (gateStage) gateStage.remove();
+
+      // Show only the permanent black screen with glowing red "SYSTEM HAS DELETED"
+      const deletedStage = document.getElementById('system-deleted-stage');
+      deletedStage.classList.remove('stage-hidden');
+
+      // Block all clicks, context menus, and non-reload keyboard shortcuts
+      const blockInteraction = (e) => {
+        if (e.type === 'keydown') {
+          const isReload = e.key === 'F5' || ((e.ctrlKey || e.metaKey) && (e.key === 'r' || e.key === 'R'));
+          if (isReload) return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+
+      window.addEventListener('click', blockInteraction, true);
+      window.addEventListener('mousedown', blockInteraction, true);
+      window.addEventListener('contextmenu', blockInteraction, true);
+      window.addEventListener('keydown', blockInteraction, true);
+      window.addEventListener('touchstart', blockInteraction, true);
+    };
+
+    function startIntroSequence() {
+      if (systemTerminated) return;
+
+      const introStage = document.getElementById('intro-stage');
+      const dashboardStage = document.getElementById('system-dashboard-stage');
+      const gateStage = document.getElementById('gate-fullscreen-stage');
+      const gateIframe = document.getElementById('gate-exam-iframe');
+
+      if (gateIframe.getAttribute('src') !== 'about:blank') {
+        gateIframe.setAttribute('src', 'about:blank');
+      }
+
+      dashboardStage.classList.add('stage-hidden');
+      gateStage.classList.add('stage-hidden');
+      introStage.classList.remove('stage-hidden');
+
+      const bootLoader = document.getElementById('intro-boot-loader');
+      const bootBar = document.getElementById('intro-boot-bar');
+      const bootPct = document.getElementById('intro-boot-pct');
+      const bootLog = document.getElementById('intro-boot-log');
+      const lightBeam = document.getElementById('intro-light-beam');
+      const firstNotif = document.getElementById('intro-first-notif');
+      const floodContainer = document.getElementById('intro-flood-container');
+      const corruptNotif = document.getElementById('intro-corrupt-notif');
+
+      clearAllIntroTimers();
+      floodInProgress = false;
+      introGlitchIntensity = 0.18;
+
+      bootLoader.classList.remove('stage-hidden');
+      lightBeam.classList.add('stage-hidden');
+      firstNotif.classList.add('stage-hidden');
+      corruptNotif.classList.add('stage-hidden');
+      floodContainer.innerHTML = '';
+      bootBar.style.width = '0%';
+
+      const bootLogs = [
+        'SCANNING PLAYER MANA SIGNATURE...',
+        'VERIFYING DOUBLE DUNGEON ALTAR...',
+        'CONNECTING TO ARCHITECT SERVER...',
+        'LOADING SECRET QUEST [AWAKENING]...',
+        'SYSTEM READY // 100%'
+      ];
+
+      let pct = 0;
+      const bootTimer = setInterval(() => {
+        if (systemTerminated) {
+          clearInterval(bootTimer);
+          return;
+        }
+        pct += 10;
+        if (pct > 100) pct = 100;
+        bootBar.style.width = `${pct}%`;
+        bootPct.textContent = `${pct}%`;
+        if (bootLog) {
+          bootLog.textContent = bootLogs[Math.min(bootLogs.length - 1, Math.floor(pct / 22))];
+        }
+
+        if (pct >= 100) {
+          clearInterval(bootTimer);
+          const t1 = setTimeout(() => {
+            bootLoader.classList.add('stage-hidden');
+            lightBeam.classList.remove('stage-hidden');
+            systemAudio.playWindowOpen();
+
+            const t2 = setTimeout(() => {
+              firstNotif.classList.remove('stage-hidden');
+              firstNotif.classList.add('animate-sl-materialize');
+            }, 130);
+
+            const t3 = setTimeout(() => {
+              lightBeam.classList.add('stage-hidden');
+            }, 500);
+
+            floodTimeouts.push(t2, t3);
+          }, 160);
+          floodTimeouts.push(t1);
+        }
+      }, 60);
+    }
+
+    /* Step B: Triggered when user clicks YES on the first NOTIFICATION */
+    window.triggerNotificationFlood = function () {
+      if (floodInProgress || systemTerminated) return;
+      floodInProgress = true;
+      introGlitchIntensity = 0.95;
+
+      systemAudio.initContext();
+
+      const introStage = document.getElementById('intro-stage');
+      const floodContainer = document.getElementById('intro-flood-container');
+      const sliceLayer = document.getElementById('intro-screen-slices');
+      const firstNotif = document.getElementById('intro-first-notif');
+      const TOTAL_FLOOD_WINDOWS = 28;
+
+      introStage.classList.add('screen-shake-active');
+
+      const glitchPrompts = [
+        'Are you sure?',
+        'Are you sure?',
+        'ACCEPT THE SYSTEM?',
+        'PLAYER QUALIFICATION',
+        'ERR // 0x7F_ARCHITECT',
+        'Are you sure?'
+      ];
+
+      for (let i = 0; i < TOTAL_FLOOD_WINDOWS; i++) {
+        const tid = setTimeout(() => {
+          if (systemTerminated) return;
+          systemAudio.playFloodGlitch(i);
+
+          const win = document.createElement('div');
+          win.className = 'sl-notif-box sl-flood-window';
+
+          const scale = 0.64 + (i % 5) * 0.09;
+          const leftPct = (i * 23) % 90 - 12;
+          const topPct = (i * 17) % 86 - 10;
+
+          win.style.left = `${leftPct}vw`;
+          win.style.top = `${topPct}vh`;
+          win.style.transform = `scale(${scale})`;
+
+          // Chromatic border shift on alternating glitch windows
+          if (i % 4 === 0) {
+            win.style.borderColor = '#e879f9';
+            win.style.boxShadow = '0 0 36px rgba(217,70,239,0.9), -6px 0 0 rgba(0,240,255,0.8)';
+          }
+
+          win.innerHTML = `
+            <div class="sl-flare-top"></div>
+            <div class="sl-flare-bottom"></div>
+            <div class="sl-corner-dec sl-c-tl"></div>
+            <div class="sl-corner-dec sl-c-tr"></div>
+            <div class="sl-corner-dec sl-c-bl"></div>
+            <div class="sl-corner-dec sl-c-br"></div>
+            <div class="sl-notif-header">
+              <div class="sl-notif-icon-box">
+                <div class="sl-notif-icon-circle">!</div>
+              </div>
+              <div class="sl-notif-title-box">
+                <span class="sl-notif-title-text">NOTIFICATION</span>
+              </div>
+            </div>
+            <div class="sl-notif-body">
+              <p class="sl-notif-prompt">${glitchPrompts[i % glitchPrompts.length]}</p>
+            </div>
+            <div class="sl-notif-actions">
+              <button type="button" class="sl-notif-btn">YES</button>
+              <button type="button" class="sl-notif-btn">NO</button>
+            </div>
+          `;
+
+          floodContainer.appendChild(win);
+
+          // Spawn horizontal RGB screen-tear slice bars
+          if (sliceLayer && i % 2 === 0) {
+            sliceLayer.innerHTML = '';
+            for (let s = 0; s < 3; s++) {
+              const bar = document.createElement('div');
+              bar.className = 'glitch-slice-bar';
+              bar.style.top = `${Math.random() * 95}vh`;
+              bar.style.height = `${4 + Math.random() * 22}px`;
+              bar.style.background = s % 2 === 0 ? 'rgba(0, 240, 255, 0.55)' : 'rgba(232, 121, 249, 0.55)';
+              sliceLayer.appendChild(bar);
+            }
+          }
+        }, i * 50);
+        floodTimeouts.push(tid);
+      }
+
+      const blackoutTime = TOTAL_FLOOD_WINDOWS * 50 + 220;
+      const tBlackout = setTimeout(() => {
+        if (systemTerminated) return;
+        introStage.classList.remove('screen-shake-active');
+        firstNotif.classList.add('stage-hidden');
+        floodContainer.innerHTML = '';
+        if (sliceLayer) sliceLayer.innerHTML = '';
+        introGlitchIntensity = 0.05;
+        systemAudio.playBlackoutDrop();
+
+        const tCorrupt = setTimeout(() => {
+          if (!systemTerminated) showCorruptedFinalNotification();
+        }, 620);
+        floodTimeouts.push(tCorrupt);
+      }, blackoutTime);
+      floodTimeouts.push(tBlackout);
+    };
+
+    /* Step D: Corrupted Glitch Notification (~*?%/XFI%~X/ -> T!@ICATION -> NOTIBICA18) */
+    function showCorruptedFinalNotification() {
+      if (systemTerminated) return;
+      introGlitchIntensity = 0.78;
+      const corruptNotif = document.getElementById('intro-corrupt-notif');
+      const titleEl = document.getElementById('corrupt-title-text');
+      const bodyEl = document.getElementById('corrupt-body-text');
+      const hexEl = document.getElementById('corrupt-hex-code');
+      const blocksLayer = document.getElementById('corrupt-blocks-layer');
+      const yesBlock = document.getElementById('corrupt-yes-block');
+
+      corruptNotif.classList.remove('stage-hidden');
+      corruptNotif.classList.add('animate-sl-materialize');
+      systemAudio.playWindowOpen();
+
+      const corruptTitles = [
+        '~*?%/XFI%~X/',
+        'T!@ICATION',
+        'NOTIBICA18',
+        'N0T!FICAT10N',
+        'SY$T3M_4W4K3N',
+        'NOTIFICATION'
+      ];
+      const corruptBodies = [
+        'Z#91@ System?',
+        '%C89te $he System?',
+        '2c89te System?',
+        'Accept Player Awakening?',
+        'Are you sure?'
+      ];
+      const corruptHex = [
+        'ERR_0x99F // ARCHITECT_OVERRIDE',
+        'MEM_DUMP // 0x00F8_MONARCH',
+        'FATAL_SYNC // SHADOW_CORE',
+        'QUEST_ID // 0x001_AWAKEN'
+      ];
+
+      let tick = 0;
+      corruptScrambleInterval = setInterval(() => {
+        if (systemTerminated) return;
+        systemAudio.playCorruptTick();
+
+        titleEl.textContent = corruptTitles[tick % corruptTitles.length];
+        bodyEl.textContent = corruptBodies[tick % corruptBodies.length];
+        if (hexEl) hexEl.textContent = corruptHex[tick % corruptHex.length];
+
+        if (tick % 3 === 0) {
+          yesBlock.classList.remove('hidden');
+        } else {
+          yesBlock.classList.add('hidden');
+        }
+
+        blocksLayer.innerHTML = '';
+        const count = 5 + (tick % 5);
+        const colors = [
+          'rgba(0, 240, 255, 0.8)',
+          'rgba(217, 70, 239, 0.8)',
+          'rgba(255, 255, 255, 0.9)',
+          'rgba(56, 182, 255, 0.7)',
+          'rgba(244, 63, 94, 0.75)'
+        ];
+
+        for (let i = 0; i < count; i++) {
+          const b = document.createElement('div');
+          b.className = 'glitch-block-artifact';
+          b.style.width = `${22 + Math.random() * 125}px`;
+          b.style.height = `${4 + Math.random() * 26}px`;
+          b.style.left = `${4 + Math.random() * 86}%`;
+          b.style.top = `${6 + Math.random() * 86}%`;
+          b.style.background = colors[i % colors.length];
+          blocksLayer.appendChild(b);
+        }
+
+        tick++;
+      }, 120);
+    }
+
+    /* Click YES in Corrupted Notification -> Enter Main System Dashboard */
+    window.completeIntroAndEnterSystem = function () {
+      if (systemTerminated) return;
+      clearAllIntroTimers();
+      introGlitchIntensity = 0;
+
+      const sliceLayer = document.getElementById('intro-screen-slices');
+      if (sliceLayer) sliceLayer.innerHTML = '';
+
+      systemAudio.playAwakenFanfare();
+      unlockAndPlaySoftBackgroundMedia();
+
+      const introStage = document.getElementById('intro-stage');
+      const dashboardStage = document.getElementById('system-dashboard-stage');
+
+      introStage.classList.add('stage-hidden');
+      dashboardStage.classList.remove('stage-hidden');
+    };
+
+    /*************************************************************************
+     * 5. CINEMATIC DIMENSIONAL GATE WARP TRANSITION & FULLSCREEN CONTROLLER
+     *************************************************************************/
+    let warpAnimId = null;
+
+    function playDimensionalWarpCanvas(themeColor = '#00f0ff') {
+      const canvas = document.getElementById('gate-warp-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = (canvas.width = window.innerWidth);
+      const h = (canvas.height = window.innerHeight);
+      const cx = w / 2;
+      const cy = h / 2;
+
+      const stars = Array.from({ length: 130 }, () => ({
+        angle: Math.random() * Math.PI * 2,
+        dist: 10 + Math.random() * (Math.max(w, h) * 0.5),
+        speed: 8 + Math.random() * 24,
+        len: 18 + Math.random() * 55
+      }));
+
+      let ringScale = 0.15;
+      let rot = 0;
+
+      if (warpAnimId) cancelAnimationFrame(warpAnimId);
+
+      function renderWarp() {
+        ctx.fillStyle = 'rgba(2, 5, 18, 0.36)';
+        ctx.fillRect(0, 0, w, h);
+
+        ringScale += 0.045;
+        rot += 0.08;
+
+        // Expanding Dimensional Rift Rings
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(rot);
+        ctx.strokeStyle = themeColor;
+        ctx.lineWidth = 3;
+        ctx.shadowColor = themeColor;
+        ctx.shadowBlur = 25;
+        ctx.setLineDash([28, 14]);
+        ctx.beginPath();
+        ctx.arc(0, 0, ringScale * 180, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.rotate(-rot * 1.8);
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.arc(0, 0, ringScale * 115, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+
+        // Hyperspace Mana Streaks
+        stars.forEach((st) => {
+          st.dist += st.speed;
+          if (st.dist > Math.max(w, h) * 0.75) st.dist = 8;
+
+          const x1 = cx + Math.cos(st.angle) * st.dist;
+          const y1 = cy + Math.sin(st.angle) * st.dist;
+          const x2 = cx + Math.cos(st.angle) * (st.dist + st.len);
+          const y2 = cy + Math.sin(st.angle) * (st.dist + st.len);
+
+          ctx.save();
+          ctx.strokeStyle = Math.random() > 0.25 ? themeColor : '#ffffff';
+          ctx.lineWidth = 2.2;
+          ctx.shadowColor = themeColor;
+          ctx.shadowBlur = 12;
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.stroke();
+          ctx.restore();
+        });
+
+        warpAnimId = requestAnimationFrame(renderWarp);
+      }
+
+      warpAnimId = requestAnimationFrame(renderWarp);
+    }
+
+    window.enterDungeonGate = function (gateKey) {
+      if (systemTerminated) return;
+      const gate = DUNGEON_GATES[gateKey];
+      if (!gate) return;
+
+      systemAudio.playGateWarpSwoosh();
+      systemAudio.stopFallbackBGM();
+
+      // Mute background video while inside the exam Gate
+      if (ytReady && ytPlayer && typeof ytPlayer.mute === 'function') {
+        try { ytPlayer.mute(); } catch (e) {}
+      }
+
+      const dashboardStage = document.getElementById('system-dashboard-stage');
+      const gateStage = document.getElementById('gate-fullscreen-stage');
+      const gateIframe = document.getElementById('gate-exam-iframe');
+      const warpFlash = document.getElementById('gate-warp-flash');
+      const warpText = document.getElementById('gate-warp-text');
+      const warpBar = document.getElementById('gate-warp-bar');
+
+      const gateColors = {
+        tinhoc: '#00f0ff',
+        sinhhoc: '#34d399',
+        lichsu: '#c084fc'
+      };
+
+      dashboardStage.classList.add('stage-hidden');
+      gateStage.classList.remove('stage-hidden');
+
+      warpText.textContent = `CỔNG S-RANK: ${gate.name}`;
+      if (warpBar) warpBar.style.width = '0%';
+      warpFlash.classList.remove('opacity-0');
+      warpFlash.classList.add('opacity-100');
+
+      playDimensionalWarpCanvas(gateColors[gateKey] || '#00f0ff');
+      setTimeout(() => {
+        if (warpBar) warpBar.style.width = '100%';
+      }, 40);
+
+      gateIframe.setAttribute('src', gate.url);
+
+      setTimeout(() => {
+        warpFlash.classList.remove('opacity-100');
+        warpFlash.classList.add('opacity-0');
+        setTimeout(() => {
+          if (warpAnimId) {
+            cancelAnimationFrame(warpAnimId);
+            warpAnimId = null;
+          }
+        }, 520);
+      }, 1150);
+    };
+
+    window.exitDungeonGate = function () {
+      if (systemTerminated) return;
+      systemAudio.playWindowOpen();
+
+      const dashboardStage = document.getElementById('system-dashboard-stage');
+      const gateStage = document.getElementById('gate-fullscreen-stage');
+      const gateIframe = document.getElementById('gate-exam-iframe');
+
+      gateIframe.setAttribute('src', 'about:blank');
+
+      gateStage.classList.add('stage-hidden');
+      dashboardStage.classList.remove('stage-hidden');
+
+      // Restore energetic background audio
+      if (systemAudio.bgmEnabled) {
+        const targetVol = Math.round(systemAudio.bgmVolume * 100);
+        if (activeMediaMode === 'youtube' && ytReady && ytPlayer && typeof ytPlayer.unMute === 'function') {
+          try {
+            ytPlayer.unMute();
+            ytPlayer.setVolume(targetVol);
+            ytPlayer.playVideo();
+          } catch (e) {}
+        } else {
+          systemAudio.startFallbackBGM();
+        }
+      }
+    };
+
+    /*************************************************************************
+     * 6. INITIALIZATION & ZERO-LAG UI EVENT LISTENERS
+     *************************************************************************/
+    document.addEventListener('DOMContentLoaded', () => {
+      initIntroGlitchCanvas();
+      initShadowMonarchCanvas();
+      startIntroSequence();
+
+      // Wallpaper Theme Switcher Button
+      const btnCycleBg = document.getElementById('btn-cycle-bg');
+      if (btnCycleBg) {
+        btnCycleBg.addEventListener('click', () => {
+          if (systemTerminated) return;
+          bgThemeIndex = (bgThemeIndex + 1) % BG_THEMES.length;
+          const theme = BG_THEMES[bgThemeIndex];
+          document.getElementById('bg-theme-label').textContent = `🌌 NỀN: ${theme.name}`;
+          systemAudio.playWindowOpen();
+        });
+      }
+
+      // Energetic Beat Style Switcher (ReawakeR 145 BPM <-> Shadow Raid 156 BPM)
+      const btnBgmStyle = document.getElementById('btn-bgm-style');
+      if (btnBgmStyle) {
+        btnBgmStyle.addEventListener('click', () => {
+          if (systemTerminated) return;
+          systemAudio.bgmStyle = (systemAudio.bgmStyle + 1) % 2;
+          document.getElementById('bgm-style-label').textContent =
+            systemAudio.bgmStyle === 0 ? '⚡ BEAT: REAWAKE-R' : '🔥 BEAT: SHADOW RAID';
+          // Force immediate switch to energetic synth beat if user clicks Beat switcher
+          activeMediaMode = 'synth';
+          const ytShell = document.getElementById('yt-frame-shell');
+          if (ytShell) ytShell.classList.remove('yt-verified-playing');
+          if (ytReady && ytPlayer && typeof ytPlayer.mute === 'function') {
+            try { ytPlayer.mute(); } catch (e) {}
+          }
+          systemAudio.startFallbackBGM();
+          systemAudio.playWindowOpen();
+        });
+      }
+
+      document.querySelectorAll('button, .sl-gate-card').forEach((el) => {
+        el.addEventListener('mouseenter', () => systemAudio.playHover(), { passive: true });
+      });
+
+      document.getElementById('btn-toggle-bgm').addEventListener('click', () => {
+        if (systemTerminated) return;
+        systemAudio.bgmEnabled = !systemAudio.bgmEnabled;
+        const pct = Math.round(systemAudio.bgmVolume * 100);
+        document.getElementById('bgm-icon').textContent = systemAudio.bgmEnabled ? '🔊' : '🔇';
+        document.getElementById('bgm-label').textContent = systemAudio.bgmEnabled ? `${pct}%` : 'MUTE';
+        const eqBars = document.getElementById('bgm-eq-bars');
+        if (eqBars) eqBars.classList.toggle('eq-active', systemAudio.bgmEnabled);
+
+        if (activeMediaMode === 'youtube' && ytReady && ytPlayer) {
+          if (systemAudio.bgmEnabled) {
+            ytPlayer.unMute();
+            ytPlayer.setVolume(pct);
+            ytPlayer.playVideo();
+          } else {
+            ytPlayer.mute();
+          }
+        }
+      });
+
+      document.getElementById('bgm-volume').addEventListener('input', (e) => {
+        if (systemTerminated) return;
+        const val = parseInt(e.target.value, 10);
+        systemAudio.bgmVolume = val / 100;
+        systemAudio.bgmEnabled = val > 0;
+        document.getElementById('bgm-icon').textContent = val > 0 ? '🔊' : '🔇';
+        document.getElementById('bgm-label').textContent = val > 0 ? `${val}%` : 'MUTE';
+        const eqBars = document.getElementById('bgm-eq-bars');
+        if (eqBars) eqBars.classList.toggle('eq-active', val > 0);
+
+        if (activeMediaMode === 'youtube' && ytReady && ytPlayer && typeof ytPlayer.setVolume === 'function') {
+          if (val > 0) ytPlayer.unMute();
+          ytPlayer.setVolume(val);
+        }
+      });
+
+      document.getElementById('btn-toggle-sfx').addEventListener('click', () => {
+        if (systemTerminated) return;
+        systemAudio.sfxEnabled = !systemAudio.sfxEnabled;
+        document.getElementById('sfx-label').textContent = systemAudio.sfxEnabled ? 'SFX: ON' : 'SFX: OFF';
+      });
+    });
+  </script>
+</body>
+</html>
